@@ -1,0 +1,1424 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lịch Thi Đấu PickleBall - CUP 2025</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+            color: white;
+            padding: 30px;
+            text-align: center;
+            position: relative;
+        }
+        
+        .header h1 {
+            margin: 0 0 10px 0;
+            font-size: 2.5em;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .header p {
+            margin: 5px 0;
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+        
+        .status-indicator {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .status-online {
+            background: rgba(76, 175, 80, 0.9);
+            color: white;
+        }
+        
+        .status-offline {
+            background: rgba(244, 67, 54, 0.9);
+            color: white;
+        }
+        
+        .status-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: currentColor;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+        
+        .content {
+            padding: 30px;
+        }
+        
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+        
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 0.9em;
+        }
+        
+        .btn-primary {
+            background: #667eea;
+            color: white;
+        }
+        
+        .btn-success {
+            background: #28a745;
+            color: white;
+        }
+        
+        .btn-danger {
+            background: #dc3545;
+            color: white;
+        }
+        
+        .btn-warning {
+            background: #ffc107;
+            color: #212529;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+        
+        .file-input {
+            display: none;
+        }
+        
+        .teams-section {
+            margin-bottom: 30px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+        }
+        
+        .teams-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .team-card {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .team-name {
+            font-weight: bold;
+            color: #667eea;
+            font-size: 1.1em;
+        }
+        
+        .courts-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .court-table {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .court-header {
+            padding: 20px;
+            color: white;
+            text-align: center;
+            font-size: 1.5em;
+            font-weight: bold;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+        }
+        
+        .court-1 .court-header {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+        }
+        
+        .court-2 .court-header {
+            background: linear-gradient(135deg, #f093fb, #f5576c);
+        }
+        
+        .schedule-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .schedule-table th {
+            padding: 12px 8px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 0.9em;
+            color: white;
+        }
+        
+        .court-1 .schedule-table th {
+            background: #667eea;
+        }
+        
+        .court-2 .schedule-table th {
+            background: #f5576c;
+        }
+        
+        .schedule-table td {
+            padding: 10px 6px;
+            text-align: center;
+            border-bottom: 1px solid #eee;
+            font-size: 0.9em;
+        }
+        
+        .schedule-table tbody tr:hover {
+            background: #f8f9fa;
+        }
+        
+        .schedule-table tbody tr:nth-child(even) {
+            background: #fafafa;
+        }
+        
+        .schedule-table tbody tr:nth-child(even):hover {
+            background: #f0f0f0;
+        }
+        
+        .match-number {
+            background: #333;
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 0.85em;
+        }
+        
+        .team-cell {
+            font-weight: bold;
+            color: #333;
+        }
+        
+        .vs-cell {
+            color: #ff6b6b;
+            font-weight: bold;
+        }
+        
+        .result-input {
+            width: 70px;
+            padding: 6px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            text-align: center;
+            font-weight: bold;
+            transition: border-color 0.3s;
+            background: white;
+        }
+        
+        .result-input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        
+        .result-input.completed {
+            background: #d4edda;
+            border-color: #28a745;
+        }
+        
+        .result-input.invalid {
+            background: #f8d7da;
+            border-color: #dc3545;
+        }
+        
+        .time-cell {
+            font-weight: bold;
+            color: #666;
+        }
+        
+        .ranking-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        
+        .ranking-table th {
+            background: #667eea;
+            color: white;
+            padding: 15px;
+            text-align: center;
+            font-weight: bold;
+        }
+        
+        .ranking-table td {
+            padding: 12px 15px;
+            text-align: center;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .ranking-table tbody tr:hover {
+            background: #f8f9fa;
+        }
+        
+        .ranking-position {
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+        
+        .ranking-1 {
+            background: linear-gradient(45deg, #ffd700, #ffed4e);
+            color: #b8860b;
+        }
+        
+        .ranking-2 {
+            background: linear-gradient(45deg, #c0c0c0, #e5e5e5);
+            color: #666;
+        }
+        
+        .ranking-3 {
+            background: linear-gradient(45deg, #cd7f32, #daa520);
+            color: #8b4513;
+        }
+        
+        .rules {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .rules h3 {
+            color: #856404;
+            margin-top: 0;
+        }
+        
+        .rules ul {
+            margin: 10px 0;
+            padding-left: 20px;
+        }
+        
+        .rules li {
+            margin-bottom: 8px;
+            color: #856404;
+        }
+        
+        .prize-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        
+        .prize-table th {
+            background: #667eea;
+            color: white;
+            padding: 15px;
+            text-align: center;
+            font-weight: bold;
+        }
+        
+        .prize-table td {
+            padding: 12px 15px;
+            text-align: center;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .prize-table tbody tr:hover {
+            background: #f8f9fa;
+        }
+        
+        .highlight {
+            background: #d4edda;
+            font-weight: bold;
+        }
+        
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px 20px;
+            border-radius: 8px;
+            color: white;
+            font-weight: bold;
+            z-index: 1000;
+            transform: translateX(400px);
+            transition: transform 0.3s ease;
+            max-width: 300px;
+        }
+        
+        .notification.show {
+            transform: translateX(0);
+        }
+        
+        .notification.success {
+            background: #28a745;
+        }
+        
+        .notification.error {
+            background: #dc3545;
+        }
+        
+        .notification.info {
+            background: #17a2b8;
+        }
+        
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .stat-card {
+            background: #667eea;
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+        
+        .stat-number {
+            font-size: 2em;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .stat-label {
+            font-size: 0.9em;
+            opacity: 0.9;
+        }
+        
+        .backup-section {
+            background: #e3f2fd;
+            border: 1px solid #90caf9;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .backup-section h3 {
+            color: #1976d2;
+            margin-top: 0;
+        }
+        
+        .backup-info {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 10px 0;
+            font-size: 0.9em;
+        }
+        
+        @media (max-width: 1200px) {
+            .courts-container {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .header h1 {
+                font-size: 2em;
+            }
+            
+            .content {
+                padding: 20px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .schedule-table th, .schedule-table td {
+                padding: 8px 4px;
+                font-size: 0.8em;
+            }
+            
+            .result-input {
+                width: 50px;
+                padding: 4px;
+                font-size: 0.8em;
+            }
+            
+            .teams-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .controls {
+                flex-wrap: wrap;
+            }
+            
+            .btn {
+                padding: 8px 16px;
+                font-size: 0.8em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="status-indicator" id="statusIndicator">
+                <div class="status-dot"></div>
+                <span id="statusText">READY</span>
+            </div>
+            <h1>🎾 LỊCH THI ĐẤU</h1>
+            <h2>Mini Game PickleBall Quảng Hùng - CUP 2025</h2>
+            <p>⏰ Thời gian: 6:00 - 9:00</p>
+        </div>
+        
+        <div class="content">
+            
+            <div class="stats">
+                <div class="stat-card">
+                    <div class="stat-number" id="totalMatches">21</div>
+                    <div class="stat-label">Tổng trận</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="completedMatches">0</div>
+                    <div class="stat-label">Đã đấu</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="remainingMatches">21</div>
+                    <div class="stat-label">Còn lại</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="progress">0%</div>
+                    <div class="stat-label">Tiến độ</div>
+                </div>
+            </div>
+            
+            <div class="teams-section">
+                <h3>📋 DANH SÁCH CÁC ĐỘI</h3>
+                <div class="teams-grid">
+                    <div class="team-card">
+                        <div class="team-name">Đội 1: Kiên KK + Dương Quá</div>
+                    </div>
+                    <div class="team-card">
+                        <div class="team-name">Đội 2: Tuấn Râu + Nóc nhà Tuấn Râu</div>
+                    </div>
+                    <div class="team-card">
+                        <div class="team-name">Đội 3: Tâm Bư + Khoa Pub</div>
+                    </div>
+                    <div class="team-card">
+                        <div class="team-name">Đội 4: Quân Chùn + Danh Hài</div>
+                    </div>
+                    <div class="team-card">
+                        <div class="team-name">Đội 5: Nam Hi + Thành Thục</div>
+                    </div>
+                    <div class="team-card">
+                        <div class="team-name">Đội 6: Thanh Sởi + Tuấn Mượt</div>
+                    </div>
+                    <div class="team-card">
+                        <div class="team-name">Đội 7: Linh Muối + Đạt Trố</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="courts-container">
+                <div class="court-table court-1">
+                    <div class="court-header">
+                        🏟️ SÂN 1
+                    </div>
+                    <table class="schedule-table">
+                        <thead>
+                            <tr>
+                                <th width="8%">STT</th>
+                                <th width="10%">Giờ</th>
+                                <th width="25%">Team 1</th>
+                                <th width="8%">VS</th>
+                                <th width="25%">Team 2</th>
+                                <th width="24%">Kết quả</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><div class="match-number">1</div></td>
+                                <td class="time-cell">6:00</td>
+                                <td class="team-cell">Kiên KK <br> Dương Quá</td>
+                                <td class="vs-cell">VS</td>
+                                <td class="team-cell">Tuấn Râu <br> Nóc nhà Râu</td>
+                                <td><input type="text" class="result-input" data-match="1" data-team1="1" data-team2="2" placeholder="0-0" onchange="updateResult(this)"></td>
+                            </tr>
+                            <tr>
+                                <td><div class="match-number">3</div></td>
+                                <td class="time-cell">6:15</td>
+                                <td class="team-cell">Nam Hi <br> Thành Thục</td>
+                                <td class="vs-cell">VS</td>
+                                <td class="team-cell">Thanh Sởi <br> Tuấn Mượt</td>
+                                <td><input type="text" class="result-input" data-match="3" data-team1="5" data-team2="6" placeholder="0-0" onchange="updateResult(this)"></td>
+                            </tr>
+                            <tr>
+                                <td><div class="match-number">5</div></td>
+                                <td class="time-cell">6:30</td>
+                                <td class="team-cell">Tuấn Râu <br> Nóc nhà Râu</td>
+                                <td class="vs-cell">VS</td>
+                                <td class="team-cell">Tâm Bư <br> Khoa Pub</td>
+                                <td><input type="text" class="result-input" data-match="5" data-team1="2" data-team2="3" placeholder="0-0" onchange="updateResult(this)"></td>
+                            </tr>
+                            <tr>
+                                <td><div class="match-number">7</div></td>
+                                <td class="time-cell">6:45</td>
+                                <td class="team-cell">Thanh Sởi <br> Tuấn Mượt</td>
+                                <td class="vs-cell">VS</td>
+                                <td class="team-cell">Linh Muối <br> Đạt Trố</td>
+                                <td><input type="text" class="result-input" data-match="7" data-team1="6" data-team2="7" placeholder="0-0" onchange="updateResult(this)"></td>
+                            </tr>
+                            <tr>
+                                <td><div class="match-number">9</div></td>
+                                <td class="time-cell">7:00</td>
+                                <td class="team-cell">Tuấn Râu <br> Nóc nhà Râu</td>
+                                <td class="vs-cell">VS</td>
+                                <td class="team-cell">Quân Chùn <br> Danh Hài</td>
+                                <td><input type="text" class="result-input" data-match="9" data-team1="2" data-team2="4" placeholder="0-0" onchange="updateResult(this)"></td>
+                            </tr>
+                            <tr>
+                                <td><div class="match-number">11</div></td>
+                                <td class="time-cell">7:15</td>
+                                <td class="team-cell">Linh Muối <br> Đạt Trố</td>
+                                <td class="vs-cell">VS</td>
+                                <td class="team-cell">Tuấn Râu <br> Nóc nhà Râu</td>
+                                <td><input type="text" class="result-input" data-match="11" data-team1="7" data-team2="2" placeholder="0-0" onchange="updateResult(this)"></td>
+                            </tr>
+                            <tr>
+                                <td><div class="match-number">13</div></td>
+                                <td class="time-cell">7:30</td>
+                                <td class="team-cell">Tâm Bư <br> Khoa Pub</td>
+                                <td class="vs-cell">VS</td>
+                                <td class="team-cell">Nam Hi <br> Thành Thục</td>
+                                <td><input type="text" class="result-input" data-match="13" data-team1="3" data-team2="5" placeholder="0-0" onchange="updateResult(this)"></td>
+                            </tr>
+                            <tr>
+                                <td><div class="match-number">15</div></td>
+                                <td class="time-cell">7:45</td>
+                                <td class="team-cell">Linh Muối <br> Đạt Trố</td>
+                                <td class="vs-cell">VS</td>
+                                <td class="team-cell">Quân Chùn <br> Danh Hài</td>
+                                <td><input type="text" class="result-input" data-match="15" data-team1="7" data-team2="4" placeholder="0-0" onchange="updateResult(this)"></td>
+                            </tr>
+                            <tr>
+                                <td><div class="match-number">17</div></td>
+                                <td class="time-cell">8:00</td>
+                                <td class="team-cell">Tâm Bư <br> Khoa Pub</td>
+                                <td class="vs-cell">VS</td>
+                                <td class="team-cell">Thanh Sởi <br> Tuấn Mượt</td>
+                                <td><input type="text" class="result-input" data-match="17" data-team1="3" data-team2="6" placeholder="0-0" onchange="updateResult(this)"></td>
+                            </tr>
+                            <tr>
+                                <td><div class="match-number">19</div></td>
+                                <td class="time-cell">8:15</td>
+                                <td class="team-cell">Quân Chùn <br> Danh Hài</td>
+                                <td class="vs-cell">VS</td>
+                                <td class="team-cell">Thanh Sởi <br> Tuấn Mượt</td>
+                                <td><input type="text" class="result-input" data-match="19" data-team1="4" data-team2="6" placeholder="0-0" onchange="updateResult(this)"></td>
+                            </tr>
+                            <tr>
+                                <td><div class="match-number">21</div></td>
+                                <td class="time-cell">8:30</td>
+                                <td class="team-cell">Tuấn Râu <br> Nóc nhà Râu</td>
+                                <td class="vs-cell">VS</td>
+                                <td class="team-cell">Thanh Sởi <br> Tuấn Mượt</td>
+                                <td><input type="text" class="result-input" data-match="21" data-team1="2" data-team2="6" placeholder="0-0" onchange="updateResult(this)"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div class="court-table court-2">
+                    <div class="court-header">
+                        🏟️ SÂN 2
+                    </div>
+                    <table class="schedule-table">
+                        <thead>
+                            <tr>
+                                <th width="8%">STT</th>
+                                <th width="10%">Giờ</th>
+                                <th width="25%">Đội 1</th>
+                                <th width="8%">VS</th>
+                                <th width="25%">Đội 2</th>
+                                <th width="24%">Kết quả</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><div class="match-number">2</div></td>
+                                <td class="time-cell">6:00</td>
+                                <td class="team-cell">Tâm Bư <br> Khoa Pub</td>
+                                <td class="vs-cell">VS</td>
+                                <td class="team-cell">Quân Chùn <br> Danh Hài</td>
+                                <td><input type="text" class="result-input" data-match="2" data-team1="3" data-team2="4" placeholder="0-0" onchange="updateResult(this)"></td>
+                            </tr>
+                            <tr>
+                                <td><div class="match-number">4</div></td>
+                                <td class="time-cell">6:15</td>
+                                <td class="team-cell">Linh Muối <br> Đạt Trố</td>
+                                <td class="vs-cell">VS</td>
+                                <td class="team-cell">Kiên KK <br> Dương Quá</td>
+                                <td><input type="text" class="result-input" data-match="4" data-team1="7" data-team2="1" placeholder="0-0" onchange="updateResult(this)"></td>
+                            </tr>
+                            <tr>
+                                <td><div class="match-number">6</div></td>
+                                <td class="time-cell">6:30</td>
+                                <td class="team-cell">Quân Chùn <br> Danh Hài</td>
+                                <td class="vs-cell">VS</td>
+                                <td class="team-cell">Nam Hi <br> Thành Thục</td>
+                                <td><input type="text" class="result-input" data-match="6" data-team1="4" data-team2="5" placeholder="0-0" onchange="updateResult(this)"></td>
+                            </tr>
+                            <tr>
+                                <td><div class="match-number">8</div></td>
+                                <td class="time-cell">6:45</td>
+                                <td class="team-cell">Kiên KK <br> Dương Quá</td>
+                                <td class="vs-cell">VS</td>
+                                <td class="team-cell">Tâm Bư <br> Khoa Pub</td>
+                                <td><input type="text" class="result-input" data-match="8" data-team1="1" data-team2="3" placeholder="0-0" onchange="updateResult(this)"></td>
+                            </tr>
+                            <tr>
+                                <td><div class="match-number">10</div></td>
+                                <td class="time-cell">7:00</td>
+                                <td class="team-cell">Nam Hi <br> Thành Thục</td>
+                                <td class="vs-cell">VS</td>
+                                <td class="team-cell">Thanh Sởi <br> Tuấn Mượt</td>
+                                <td><input type="text" class="result-input" data-match="10" data-team1="5" data-team2="6" placeholder="0-0" onchange="updateResult(this)"></td>
+                            </tr>
+                            <tr>
+                                <td><div class="match-number">12</div></td>
+                                <td class="time-cell">7:15</td>
+                                <td class="team-cell">Kiên KK <br> Dương Quá</td>
+                                <td class="vs-cell">VS</td>
+                                <td class="team-cell">Quân Chùn <br> Danh Hài</td>
+                                <td><input type="text" class="result-input" data-match="12" data-team1="1" data-team2="4" placeholder="0-0" onchange="updateResult(this)"></td>
+                            </tr>
+                            <tr>
+                                <td><div class="match-number">14</div></td>
+                                <td class="time-cell">7:30</td>
+                                <td class="team-cell">Thanh Sởi <br> Tuấn Mượt</td>
+                                <td class="vs-cell">VS</td>
+                                <td class="team-cell">Kiên KK <br> Dương Quá</td>
+                                <td><input type="text" class="result-input" data-match="14" data-team1="6" data-team2="1" placeholder="0-0" onchange="updateResult(this)"></td>
+                            </tr>
+                            <tr>
+                                <td><div class="match-number">16</div></td>
+                                <td class="time-cell">7:45</td>
+                                <td class="team-cell">Tuấn Râu <br> Nóc nhà Râu</td>
+                                <td class="vs-cell">VS</td>
+                                <td class="team-cell">Nam Hi <br> Thành Thục</td>
+                                <td><input type="text" class="result-input" data-match="16" data-team1="2" data-team2="5" placeholder="0-0" onchange="updateResult(this)"></td>
+                            </tr>
+                            <tr>
+                                <td><div class="match-number">18</div></td>
+                                <td class="time-cell">8:00</td>
+                                <td class="team-cell">Kiên KK <br> Dương Quá</td>
+                                <td class="vs-cell">VS</td>
+                                <td class="team-cell">Nam Hi <br> Thành Thục</td>
+                                <td><input type="text" class="result-input" data-match="18" data-team1="1" data-team2="5" placeholder="0-0" onchange="updateResult(this)"></td>
+                            </tr>
+                            <tr>
+                                <td><div class="match-number">20</div></td>
+                                <td class="time-cell">8:15</td>
+                                <td class="team-cell">Linh Muối <br> Đạt Trố</td>
+                                <td class="vs-cell">VS</td>
+                                <td class="team-cell">Tâm Bư <br> Khoa Pub</td>
+                                <td><input type="text" class="result-input" data-match="20" data-team1="7" data-team2="3" placeholder="0-0" onchange="updateResult(this)"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <div class="teams-section">
+                <h3>📈 BẢNG XẾP HẠNG</h3>
+                <table class="ranking-table">
+                    <thead>
+                        <tr>
+                            <th>Hạng</th>
+                            <th>Đội</th>
+                            <th>Trận</th>
+                            <th>Thắng</th>
+                            <th>Thua</th>
+                            <th>Điểm ghi</th>
+                            <th>Điểm thua</th>
+                            <th>Hiệu số</th>
+                            <th>Điểm</th>
+                        </tr>
+                    </thead>
+                    <tbody id="rankingTable">
+                        <tr>
+                            <td class="ranking-position">1</td>
+                            <td>Kiên KK + Dương Quá</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0</td>
+                        </tr>
+                        <tr>
+                            <td class="ranking-position">2</td>
+                            <td>Tuấn Râu + Nóc nhà Tuấn Râu</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0</td>
+                        </tr>
+                        <tr>
+                            <td class="ranking-position">3</td>
+                            <td>Tâm Bư + Khoa Pub</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0</td>
+                        </tr>
+                        <tr>
+                            <td class="ranking-position">4</td>
+                            <td>Quân Chùn + Danh Hài</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0</td>
+                        </tr>
+                        <tr>
+                            <td class="ranking-position">5</td>
+                            <td>Nam Hi + Thành Thục</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0</td>
+                        </tr>
+                        <tr>
+                            <td class="ranking-position">6</td>
+                            <td>Thanh Sởi + Tuấn Mượt</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0</td>
+                        </tr>
+                        <tr>
+                            <td class="ranking-position">7</td>
+                            <td>Linh Muối + Đạt Trố</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="rules">
+                <h3>📖 QUY ĐỊNH THI ĐẤU</h3>
+                <ul>
+                    <li><strong>Thể thức:</strong> Đấu vòng tròn tính điểm (21 trận)</li>
+                    <li><strong>Tính điểm:</strong> Thắng = 1 điểm, Thua = 0 điểm</li>
+                    <li><strong>Trọng tài:</strong> Tú (Lơ Khơ), Hải (Hãi)</li>
+                    <li><strong>Y tá:</strong> Lý Nhã Điệp</li>
+                    <li><strong>Ghi kết quả:</strong> Nhập trực tiếp vào ô kết quả (ví dụ: 11-9)</li>
+                    <li><strong>Xếp hạng:</strong> Theo điểm số, nếu bằng điểm thì xét đối kháng trực tiếp, sau đó xét hiệu số</li>
+                </ul>
+            </div>
+            
+            <div class="rules">
+                <h3>🏆 THÔNG TIN GIẢI THƯỞNG</h3>
+                <table class="prize-table">
+                    <thead>
+                        <tr>
+                            <th>Hạng</th>
+                            <th>Giải thưởng</th>
+                            <th>Số tiền</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="highlight">
+                            <td>🥇 Giải Nhất</td>
+                            <td>Cúp + Tiền thưởng</td>
+                            <td>1.500.000 đ</td>
+                        </tr>
+                        <tr>
+                            <td>🥈 Giải Nhì</td>
+                            <td>Bia + Tiền thưởng</td>
+                            <td>1.000.000 đ</td>
+                        </tr>
+                        <tr>
+                            <td>🥉 Giải Ba</td>
+                            <td>Bia + Tiền thưởng</td>
+                            <td>500.000 đ</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p style="text-align: center; margin-top: 15px; font-weight: bold; color: #667eea;">
+                    💰 Tổng quỹ giải thưởng: 4.000.000 đồng
+                </p>
+                <p style="text-align: center; margin-top: 10px; color: #666;">
+                    🎯 Anh Kiên tài trợ 02 hộp bóng 500K<br>
+                    🎯 Tuấn Râu tài trợ 500K
+                </p>
+            </div>
+        </div>
+        <div class="backup-section">
+            <h3>💾 QUẢN LÝ DỮ LIỆU</h3>
+            <div class="controls">
+                <button class="btn btn-success" onclick="saveToFile()">💾 Tải file backup</button>
+                <button class="btn btn-primary" onclick="document.getElementById('fileInput').click()">📂 Tải file lên</button>
+                <button class="btn btn-warning" onclick="saveToMemory()">🔄 Lưu tạm thời</button>
+                <button class="btn btn-primary" onclick="loadFromMemory()">📥 Khôi phục</button>
+                <button class="btn btn-danger" onclick="resetData()">🗑️ Đặt lại</button>
+                <button class="btn btn-primary" onclick="exportData()">📤 Xuất CSV</button>
+            </div>
+            <input type="file" id="fileInput" class="file-input" accept=".json" onchange="loadFromFile(event)">
+            <div class="backup-info">
+                <strong>Hướng dẫn sử dụng:</strong><br>
+                • <strong>Tải file backup:</strong> Tải file JSON chứa dữ liệu hiện tại về máy<br>
+                • <strong>Tải file lên:</strong> Chọn file backup để khôi phục dữ liệu<br>
+                • <strong>Lưu/Khôi phục tạm thời:</strong> Lưu trữ trong bộ nhớ trình duyệt hiện tại<br>
+                • <strong>Xuất CSV:</strong> Xuất bảng xếp hạng và kết quả sang Excel
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Dữ liệu các đội
+        const teams = {
+            1: "Kiên KK + Dương Quá",
+            2: "Tuấn Râu + Nóc nhà",
+            3: "Tâm Bư + Khoa Pub",
+            4: "Quân Chùn + Danh Hài",
+            5: "Nam Hi + Thành Thục",
+            6: "Thanh Sởi + Tuấn Mượt",
+            7: "Linh Muối + Đạt Trố"
+        };
+
+        // Dữ liệu trận đấu và kết quả
+        let matchResults = {};
+        let teamStats = {};
+        let tempData = null; // Lưu trữ tạm thời trong bộ nhớ
+
+        // Khởi tạo stats cho các đội
+        function initializeTeamStats() {
+            Object.keys(teams).forEach(teamId => {
+                teamStats[teamId] = {
+                    matches: 0,
+                    wins: 0,
+                    losses: 0,
+                    pointsFor: 0,
+                    pointsAgainst: 0,
+                    points: 0
+                };
+            });
+        }
+
+        // Kiểm tra trạng thái
+        function updateStatus(message = 'READY', isSuccess = true) {
+            const statusIndicator = document.getElementById('statusIndicator');
+            const statusText = document.getElementById('statusText');
+            
+            if (isSuccess) {
+                statusIndicator.className = 'status-indicator status-online';
+            } else {
+                statusIndicator.className = 'status-indicator status-offline';
+            }
+            statusText.textContent = message;
+        }
+
+        // Hiển thị thông báo
+        function showNotification(message, type = 'info') {
+            const notification = document.createElement('div');
+            notification.className = `notification ${type}`;
+            notification.textContent = message;
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.classList.add('show');
+            }, 100);
+            
+            setTimeout(() => {
+                notification.classList.remove('show');
+                setTimeout(() => {
+                    if (document.body.contains(notification)) {
+                        document.body.removeChild(notification);
+                    }
+                }, 300);
+            }, 4000);
+        }
+
+        // Validate kết quả nhập vào
+        function validateScore(scoreText) {
+            const scorePattern = /^(\d{1,2})-(\d{1,2})$/;
+            const match = scoreText.match(scorePattern);
+            
+            if (!match) return null;
+            
+            const score1 = parseInt(match[1]);
+            const score2 = parseInt(match[2]);
+            
+            // Kiểm tra tỷ số hợp lệ (0-50)
+            if (score1 < 0 || score1 > 50 || score2 < 0 || score2 > 50) return null;
+            
+            return { score1, score2 };
+        }
+
+        // Cập nhật kết quả trận đấu
+        function updateResult(input) {
+            const matchId = input.dataset.match;
+            const team1Id = input.dataset.team1;
+            const team2Id = input.dataset.team2;
+            const scoreText = input.value.trim();
+            
+            // Reset class
+            input.classList.remove('completed', 'invalid');
+            
+            if (!scoreText) {
+                // Xóa kết quả
+                delete matchResults[matchId];
+                updateTeamStats();
+                updateRankingTable();
+                updateStats();
+                return;
+            }
+            
+            const score = validateScore(scoreText);
+            
+            if (!score) {
+                input.classList.add('invalid');
+                showNotification('Tỷ số không hợp lệ! Vui lòng nhập theo định dạng: 11-9', 'error');
+                return;
+            }
+            
+            // Lưu kết quả
+            matchResults[matchId] = {
+                team1: team1Id,
+                team2: team2Id,
+                score1: score.score1,
+                score2: score.score2,
+                winner: score.score1 > score.score2 ? team1Id : team2Id,
+                timestamp: new Date().toISOString()
+            };
+            
+            input.classList.add('completed');
+            input.value = `${score.score1}-${score.score2}`;
+            
+            // Cập nhật thống kê và bảng xếp hạng
+            updateTeamStats();
+            updateRankingTable();
+            updateStats();
+            
+            showNotification(`Đã cập nhật kết quả trận ${matchId}`, 'success');
+        }
+
+        // Cập nhật thống kê các đội
+        function updateTeamStats() {
+            // Reset stats
+            initializeTeamStats();
+            
+            // Tính toán lại từ kết quả các trận
+            Object.values(matchResults).forEach(match => {
+                const team1Id = match.team1;
+                const team2Id = match.team2;
+                
+                // Cập nhật số trận
+                teamStats[team1Id].matches++;
+                teamStats[team2Id].matches++;
+                
+                // Cập nhật điểm ghi/thua
+                teamStats[team1Id].pointsFor += match.score1;
+                teamStats[team1Id].pointsAgainst += match.score2;
+                teamStats[team2Id].pointsFor += match.score2;
+                teamStats[team2Id].pointsAgainst += match.score1;
+                
+                // Cập nhật thắng/thua
+                if (match.winner === team1Id) {
+                    teamStats[team1Id].wins++;
+                    teamStats[team1Id].points += 1;
+                    teamStats[team2Id].losses++;
+                } else {
+                    teamStats[team2Id].wins++;
+                    teamStats[team2Id].points += 1;
+                    teamStats[team1Id].losses++;
+                }
+            });
+        }
+
+        // Cập nhật bảng xếp hạng
+        function updateRankingTable() {
+            const tbody = document.getElementById('rankingTable');
+            
+            // Tạo mảng các đội với thống kê
+            const teamArray = Object.keys(teams).map(teamId => ({
+                id: teamId,
+                name: teams[teamId],
+                ...teamStats[teamId],
+                goalDifference: teamStats[teamId].pointsFor - teamStats[teamId].pointsAgainst
+            }));
+            
+            // Sắp xếp theo: Điểm số -> Hiệu số -> Điểm ghi
+            teamArray.sort((a, b) => {
+                if (b.points !== a.points) return b.points - a.points;
+                if (b.goalDifference !== a.goalDifference) return b.goalDifference - a.goalDifference;
+                return b.pointsFor - a.pointsFor;
+            });
+            
+            // Cập nhật bảng
+            tbody.innerHTML = '';
+            teamArray.forEach((team, index) => {
+                const row = document.createElement('tr');
+                const rank = index + 1;
+                let rankClass = '';
+                
+                if (rank === 1) rankClass = 'ranking-1';
+                else if (rank === 2) rankClass = 'ranking-2';
+                else if (rank === 3) rankClass = 'ranking-3';
+                
+                row.innerHTML = `
+                    <td class="ranking-position ${rankClass}">${rank}</td>
+                    <td>${team.name}</td>
+                    <td>${team.matches}</td>
+                    <td>${team.wins}</td>
+                    <td>${team.losses}</td>
+                    <td>${team.pointsFor}</td>
+                    <td>${team.pointsAgainst}</td>
+                    <td>${team.goalDifference >= 0 ? '+' : ''}${team.goalDifference}</td>
+                    <td><strong>${team.points}</strong></td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+
+        // Cập nhật thống kê tổng quan
+        function updateStats() {
+            const completedMatches = Object.keys(matchResults).length;
+            const totalMatches = 21;
+            const remainingMatches = totalMatches - completedMatches;
+            const progress = Math.round((completedMatches / totalMatches) * 100);
+            
+            document.getElementById('completedMatches').textContent = completedMatches;
+            document.getElementById('remainingMatches').textContent = remainingMatches;
+            document.getElementById('progress').textContent = progress + '%';
+        }
+
+        // Lưu dữ liệu vào bộ nhớ tạm thời
+        function saveToMemory() {
+            try {
+                const data = {
+                    matchResults: matchResults,
+                    teamStats: teamStats,
+                    lastUpdated: new Date().toISOString(),
+                    version: '2.0'
+                };
+                
+                tempData = data;
+                updateStatus('DATA SAVED', true);
+                showNotification('Đã lưu dữ liệu vào bộ nhớ tạm thời!', 'success');
+            } catch (error) {
+                showNotification('Lỗi khi lưu dữ liệu: ' + error.message, 'error');
+                updateStatus('SAVE ERROR', false);
+            }
+        }
+
+        // Tải dữ liệu từ bộ nhớ tạm thời
+        function loadFromMemory() {
+            try {
+                if (!tempData) {
+                    showNotification('Không tìm thấy dữ liệu trong bộ nhớ tạm thời!', 'error');
+                    return;
+                }
+                
+                matchResults = tempData.matchResults || {};
+                teamStats = tempData.teamStats || {};
+                
+                // Cập nhật giao diện
+                updateInputFields();
+                updateTeamStats();
+                updateRankingTable();
+                updateStats();
+                
+                updateStatus('DATA LOADED', true);
+                showNotification('Đã khôi phục dữ liệu từ bộ nhớ tạm thời!', 'success');
+            } catch (error) {
+                showNotification('Lỗi khi tải dữ liệu: ' + error.message, 'error');
+                updateStatus('LOAD ERROR', false);
+            }
+        }
+
+        // Lưu dữ liệu thành file JSON
+        function saveToFile() {
+            try {
+                const data = {
+                    matchResults: matchResults,
+                    teamStats: teamStats,
+                    lastUpdated: new Date().toISOString(),
+                    version: '2.0',
+                    tournament: 'PickleBall Cup 2025'
+                };
+                
+                const dataStr = JSON.stringify(data, null, 2);
+                const dataBlob = new Blob([dataStr], {type: 'application/json'});
+                const url = URL.createObjectURL(dataBlob);
+                const link = document.createElement('a');
+                link.href = url;
+                link.download = `PickleBall_Cup_2025_Backup_${new Date().toISOString().split('T')[0]}.json`;
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                URL.revokeObjectURL(url);
+                
+                showNotification('Đã tải file backup thành công!', 'success');
+                updateStatus('BACKUP SAVED', true);
+            } catch (error) {
+                showNotification('Lỗi khi tạo file backup: ' + error.message, 'error');
+                updateStatus('BACKUP ERROR', false);
+            }
+        }
+
+        // Tải dữ liệu từ file JSON
+        function loadFromFile(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const data = JSON.parse(e.target.result);
+                    
+                    // Kiểm tra định dạng file
+                    if (!data.matchResults || !data.teamStats) {
+                        throw new Error('File không đúng định dạng!');
+                    }
+                    
+                    matchResults = data.matchResults || {};
+                    teamStats = data.teamStats || {};
+                    
+                    // Cập nhật giao diện
+                    updateInputFields();
+                    updateTeamStats();
+                    updateRankingTable();
+                    updateStats();
+                    
+                    updateStatus('FILE LOADED', true);
+                    showNotification(`Đã khôi phục dữ liệu từ file! (${Object.keys(matchResults).length} trận đấu)`, 'success');
+                } catch (error) {
+                    showNotification('Lỗi khi đọc file: ' + error.message, 'error');
+                    updateStatus('FILE ERROR', false);
+                }
+            };
+            reader.readAsText(file);
+            
+            // Reset input
+            event.target.value = '';
+        }
+
+        // Cập nhật các ô input từ dữ liệu đã lưu
+        function updateInputFields() {
+            const inputs = document.querySelectorAll('.result-input');
+            inputs.forEach(input => {
+                const matchId = input.dataset.match;
+                if (matchResults[matchId]) {
+                    const match = matchResults[matchId];
+                    input.value = `${match.score1}-${match.score2}`;
+                    input.classList.add('completed');
+                } else {
+                    input.value = '';
+                    input.classList.remove('completed', 'invalid');
+                }
+            });
+        }
+
+        // Đặt lại dữ liệu
+        function resetData() {
+            if (confirm('Bạn có chắc chắn muốn xóa toàn bộ dữ liệu?\nDữ liệu sẽ không thể khôi phục!')) {
+                matchResults = {};
+                teamStats = {};
+                tempData = null;
+                
+                initializeTeamStats();
+                updateInputFields();
+                updateRankingTable();
+                updateStats();
+                
+                updateStatus('RESET', true);
+                showNotification('Đã xóa toàn bộ dữ liệu!', 'success');
+            }
+        }
+
+        // Xuất dữ liệu ra CSV
+        function exportData() {
+            try {
+                // BOM để Excel hiển thị tiếng Việt đúng
+                let csv = '\uFEFF';
+                csv += 'STT,Thoi_gian,Doi_1,Doi_2,Ket_qua,Thang\n';
+                
+                const inputs = document.querySelectorAll('.result-input');
+                const matchData = [];
+                
+                inputs.forEach(input => {
+                    const matchId = input.dataset.match;
+                    const team1Id = input.dataset.team1;
+                    const team2Id = input.dataset.team2;
+                    const timeCell = input.closest('tr').querySelector('.time-cell').textContent;
+                    
+                    matchData.push({
+                        id: parseInt(matchId),
+                        time: timeCell,
+                        team1: teams[team1Id],
+                        team2: teams[team2Id],
+                        result: matchResults[matchId] ? `${matchResults[matchId].score1}-${matchResults[matchId].score2}` : '',
+                        winner: matchResults[matchId] ? teams[matchResults[matchId].winner] : ''
+                    });
+                });
+                
+                // Sắp xếp theo STT
+                matchData.sort((a, b) => a.id - b.id);
+                
+                matchData.forEach(match => {
+                    csv += `${match.id},"${match.time}","${match.team1}","${match.team2}","${match.result}","${match.winner}"\n`;
+                });
+                
+                // Thêm bảng xếp hạng
+                csv += '\n\nBANG_XEP_HANG\n';
+                csv += 'Hang,Doi,Tran,Thang,Thua,Diem_ghi,Diem_thua,Hieu_so,Diem\n';
+                
+                const teamArray = Object.keys(teams).map(teamId => ({
+                    id: teamId,
+                    name: teams[teamId],
+                    ...teamStats[teamId],
+                    goalDifference: teamStats[teamId].pointsFor - teamStats[teamId].pointsAgainst
+                }));
+                
+                teamArray.sort((a, b) => {
+                    if (b.points !== a.points) return b.points - a.points;
+                    if (b.goalDifference !== a.goalDifference) return b.goalDifference - a.goalDifference;
+                    return b.pointsFor - a.pointsFor;
+                });
+                
+                teamArray.forEach((team, index) => {
+                    csv += `${index + 1},"${team.name}",${team.matches},${team.wins},${team.losses},${team.pointsFor},${team.pointsAgainst},${team.goalDifference},${team.points}\n`;
+                });
+                
+                // Tạo file download
+                const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+                const link = document.createElement('a');
+                link.href = URL.createObjectURL(blob);
+                link.download = `PickleBall_Cup_2025_Results_${new Date().toISOString().split('T')[0]}.csv`;
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                URL.revokeObjectURL(link.href);
+                
+                showNotification('Đã xuất dữ liệu CSV thành công!', 'success');
+                updateStatus('CSV EXPORTED', true);
+            } catch (error) {
+                showNotification('Lỗi khi xuất CSV: ' + error.message, 'error');
+                updateStatus('EXPORT ERROR', false);
+            }
+        }
+
+        // Tự động lưu dữ liệu khi có thay đổi
+        function autoSave() {
+            if (Object.keys(matchResults).length > 0) {
+                tempData = {
+                    matchResults: matchResults,
+                    teamStats: teamStats,
+                    lastUpdated: new Date().toISOString(),
+                    version: '2.0'
+                };
+            }
+        }
+
+        // Khởi tạo ứng dụng
+        function initializeApp() {
+            initializeTeamStats();
+            updateOnlineStatus();
+            updateStats();
+            
+            // Tự động tải dữ liệu nếu có
+            if (window.tournamentData) {
+                loadData();
+            }
+            
+            // Lắng nghe sự kiện online/offline
+            window.addEventListener('online', updateOnlineStatus);
+            window.addEventListener('offline', updateOnlineStatus);
+            
+            // Tự động lưu dữ liệu khi rời trang
+            window.addEventListener('beforeunload', () => {
+                if (Object.keys(matchResults).length > 0) {
+                    saveData();
+                }
+            });
+            
+            console.log('Ứng dụng PickleBall Cup 2025 đã khởi tạo thành công!');
+        }
+
+        // Khởi động ứng dụng khi DOM đã sẵn sàng
+        document.addEventListener('DOMContentLoaded', initializeApp);
+    </script>
+</body>
+</html>
