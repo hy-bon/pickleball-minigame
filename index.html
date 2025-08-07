@@ -563,26 +563,7 @@
         </div>
         
         <div class="content">
-            <div class="backup-section">
-                <h3>💾 QUẢN LÝ DỮ LIỆU</h3>
-                <div class="controls">
-                    <button class="btn btn-success" onclick="saveToFile()">💾 Tải file backup</button>
-                    <button class="btn btn-primary" onclick="document.getElementById('fileInput').click()">📂 Tải file lên</button>
-                    <button class="btn btn-warning" onclick="saveToMemory()">🔄 Lưu tạm thời</button>
-                    <button class="btn btn-primary" onclick="loadFromMemory()">📥 Khôi phục</button>
-                    <button class="btn btn-danger" onclick="resetData()">🗑️ Đặt lại</button>
-                    <button class="btn btn-primary" onclick="exportData()">📤 Xuất CSV</button>
-                </div>
-                <input type="file" id="fileInput" class="file-input" accept=".json" onchange="loadFromFile(event)">
-                <div class="backup-info">
-                    <strong>Hướng dẫn sử dụng:</strong><br>
-                    • <strong>Tải file backup:</strong> Tải file JSON chứa dữ liệu hiện tại về máy<br>
-                    • <strong>Tải file lên:</strong> Chọn file backup để khôi phục dữ liệu<br>
-                    • <strong>Lưu/Khôi phục tạm thời:</strong> Lưu trữ trong bộ nhớ trình duyệt hiện tại<br>
-                    • <strong>Xuất CSV:</strong> Xuất bảng xếp hạng và kết quả sang Excel
-                </div>
-            </div>
-            
+          
             <div class="stats">
                 <div class="stat-card">
                     <div class="stat-number" id="totalMatches">21</div>
@@ -986,6 +967,25 @@
                     🎯 Anh Kiên tài trợ 02 hộp bóng 500K<br>
                     🎯 Tuấn Râu tài trợ 500K
                 </p>
+            </div>
+                        <div class="backup-section">
+                <h3>💾 QUẢN LÝ DỮ LIỆU</h3>
+                <div class="controls">
+                    <button class="btn btn-success" onclick="saveToFile()">💾 Tải file backup</button>
+                    <button class="btn btn-primary" onclick="document.getElementById('fileInput').click()">📂 Tải file lên</button>
+                    <button class="btn btn-warning" onclick="saveToMemory()">🔄 Lưu tạm thời</button>
+                    <button class="btn btn-primary" onclick="loadFromMemory()">📥 Khôi phục</button>
+                    <button class="btn btn-danger" onclick="resetData()">🗑️ Đặt lại</button>
+                    <button class="btn btn-primary" onclick="exportData()">📤 Xuất CSV</button>
+                </div>
+                <input type="file" id="fileInput" class="file-input" accept=".json" onchange="loadFromFile(event)">
+                <div class="backup-info">
+                    <strong>Hướng dẫn sử dụng:</strong><br>
+                    • <strong>Tải file backup:</strong> Tải file JSON chứa dữ liệu hiện tại về máy<br>
+                    • <strong>Tải file lên:</strong> Chọn file backup để khôi phục dữ liệu<br>
+                    • <strong>Lưu/Khôi phục tạm thời:</strong> Lưu trữ trong bộ nhớ trình duyệt hiện tại<br>
+                    • <strong>Xuất CSV:</strong> Xuất bảng xếp hạng và kết quả sang Excel
+                </div>
             </div>
         </div>
     </div>
