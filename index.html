@@ -1443,4 +1443,27 @@
             updateStats();
             updateStatus('READY', true);
             
-            //
+            // Tự động tải dữ liệu nếu có
+            if (window.tournamentData) {
+                loadData();
+            }
+            
+            // Lắng nghe sự kiện online/offline
+            window.addEventListener('online', updateOnlineStatus);
+            window.addEventListener('offline', updateOnlineStatus);
+            
+            // Tự động lưu dữ liệu khi rời trang
+            window.addEventListener('beforeunload', () => {
+                if (Object.keys(matchResults).length > 0) {
+                    saveData();
+                }
+            });
+            
+            console.log('Ứng dụng PickleBall Cup 2025 đã khởi tạo thành công!');
+        }
+
+        // Khởi động ứng dụng khi DOM đã sẵn sàng
+        document.addEventListener('DOMContentLoaded', initializeApp);
+    </script>
+</body>
+</html>
