@@ -480,6 +480,17 @@
             }
         }
         
+        /* Mobile responsive cho bảng xếp hạng */
+        @media (max-width: 992px) {
+            .ranking-table {
+                font-size: 0.9em;
+            }
+            
+            .ranking-table th, .ranking-table td {
+                padding: 8px 6px;
+            }
+        }
+        
         @media (max-width: 768px) {
             .schedule-table th, .schedule-table td {
                 padding: 8px 4px;
@@ -504,6 +515,38 @@
                 padding: 8px 16px;
                 font-size: 0.8em;
             }
+            
+            /* Responsive table for ranking */
+            .ranking-table-container {
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+            }
+            
+            .ranking-table {
+                min-width: 650px;
+                font-size: 0.8em;
+            }
+            
+            .ranking-table th, .ranking-table td {
+                padding: 8px 4px;
+                white-space: nowrap;
+            }
+            
+            /* Ẩn cột ít quan trọng trên mobile */
+            .ranking-table .hide-mobile {
+                display: none;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .ranking-table {
+                min-width: 500px;
+                font-size: 0.75em;
+            }
+            
+            .ranking-table th, .ranking-table td {
+                padding: 6px 3px;
+            }
         }
     </style>
 </head>
@@ -520,6 +563,25 @@
         </div>
         
         <div class="content">
+            <div class="backup-section">
+                <h3>💾 QUẢN LÝ DỮ LIỆU</h3>
+                <div class="controls">
+                    <button class="btn btn-success" onclick="saveToFile()">💾 Tải file backup</button>
+                    <button class="btn btn-primary" onclick="document.getElementById('fileInput').click()">📂 Tải file lên</button>
+                    <button class="btn btn-warning" onclick="saveToMemory()">🔄 Lưu tạm thời</button>
+                    <button class="btn btn-primary" onclick="loadFromMemory()">📥 Khôi phục</button>
+                    <button class="btn btn-danger" onclick="resetData()">🗑️ Đặt lại</button>
+                    <button class="btn btn-primary" onclick="exportData()">📤 Xuất CSV</button>
+                </div>
+                <input type="file" id="fileInput" class="file-input" accept=".json" onchange="loadFromFile(event)">
+                <div class="backup-info">
+                    <strong>Hướng dẫn sử dụng:</strong><br>
+                    • <strong>Tải file backup:</strong> Tải file JSON chứa dữ liệu hiện tại về máy<br>
+                    • <strong>Tải file lên:</strong> Chọn file backup để khôi phục dữ liệu<br>
+                    • <strong>Lưu/Khôi phục tạm thời:</strong> Lưu trữ trong bộ nhớ trình duyệt hiện tại<br>
+                    • <strong>Xuất CSV:</strong> Xuất bảng xếp hạng và kết quả sang Excel
+                </div>
+            </div>
             
             <div class="stats">
                 <div class="stat-card">
@@ -779,100 +841,102 @@
             
             <div class="teams-section">
                 <h3>📈 BẢNG XẾP HẠNG</h3>
-                <table class="ranking-table">
-                    <thead>
-                        <tr>
-                            <th>Hạng</th>
-                            <th>Đội</th>
-                            <th>Trận</th>
-                            <th>Thắng</th>
-                            <th>Thua</th>
-                            <th>Điểm ghi</th>
-                            <th>Điểm thua</th>
-                            <th>Hiệu số</th>
-                            <th>Điểm</th>
-                        </tr>
-                    </thead>
-                    <tbody id="rankingTable">
-                        <tr>
-                            <td class="ranking-position">1</td>
-                            <td>Kiên KK + Dương Quá</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>0</td>
-                        </tr>
-                        <tr>
-                            <td class="ranking-position">2</td>
-                            <td>Tuấn Râu + Nóc nhà Tuấn Râu</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>0</td>
-                        </tr>
-                        <tr>
-                            <td class="ranking-position">3</td>
-                            <td>Tâm Bư + Khoa Pub</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>0</td>
-                        </tr>
-                        <tr>
-                            <td class="ranking-position">4</td>
-                            <td>Quân Chùn + Danh Hài</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>0</td>
-                        </tr>
-                        <tr>
-                            <td class="ranking-position">5</td>
-                            <td>Nam Hi + Thành Thục</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>0</td>
-                        </tr>
-                        <tr>
-                            <td class="ranking-position">6</td>
-                            <td>Thanh Sởi + Tuấn Mượt</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>0</td>
-                        </tr>
-                        <tr>
-                            <td class="ranking-position">7</td>
-                            <td>Linh Muối + Đạt Trố</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>0</td>
-                        </tr>
-                    </tbody>
-                </table>
+                <div class="ranking-table-container">
+                    <table class="ranking-table">
+                        <thead>
+                            <tr>
+                                <th>Hạng</th>
+                                <th>Đội</th>
+                                <th>Trận</th>
+                                <th>Thắng</th>
+                                <th>Thua</th>
+                                <th class="hide-mobile">Điểm ghi</th>
+                                <th class="hide-mobile">Điểm thua</th>
+                                <th>Hiệu số</th>
+                                <th>Điểm</th>
+                            </tr>
+                        </thead>
+                        <tbody id="rankingTable">
+                            <tr>
+                                <td class="ranking-position">1</td>
+                                <td>Kiên KK + Dương Quá</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td class="hide-mobile">0</td>
+                                <td class="hide-mobile">0</td>
+                                <td>0</td>
+                                <td>0</td>
+                            </tr>
+                            <tr>
+                                <td class="ranking-position">2</td>
+                                <td>Tuấn Râu + Nóc nhà Tuấn Râu</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td class="hide-mobile">0</td>
+                                <td class="hide-mobile">0</td>
+                                <td>0</td>
+                                <td>0</td>
+                            </tr>
+                            <tr>
+                                <td class="ranking-position">3</td>
+                                <td>Tâm Bư + Khoa Pub</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td class="hide-mobile">0</td>
+                                <td class="hide-mobile">0</td>
+                                <td>0</td>
+                                <td>0</td>
+                            </tr>
+                            <tr>
+                                <td class="ranking-position">4</td>
+                                <td>Quân Chùn + Danh Hài</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td class="hide-mobile">0</td>
+                                <td class="hide-mobile">0</td>
+                                <td>0</td>
+                                <td>0</td>
+                            </tr>
+                            <tr>
+                                <td class="ranking-position">5</td>
+                                <td>Nam Hi + Thành Thục</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td class="hide-mobile">0</td>
+                                <td class="hide-mobile">0</td>
+                                <td>0</td>
+                                <td>0</td>
+                            </tr>
+                            <tr>
+                                <td class="ranking-position">6</td>
+                                <td>Thanh Sởi + Tuấn Mượt</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td class="hide-mobile">0</td>
+                                <td class="hide-mobile">0</td>
+                                <td>0</td>
+                                <td>0</td>
+                            </tr>
+                            <tr>
+                                <td class="ranking-position">7</td>
+                                <td>Linh Muối + Đạt Trố</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td class="hide-mobile">0</td>
+                                <td class="hide-mobile">0</td>
+                                <td>0</td>
+                                <td>0</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
             
             <div class="rules">
@@ -922,25 +986,6 @@
                     🎯 Anh Kiên tài trợ 02 hộp bóng 500K<br>
                     🎯 Tuấn Râu tài trợ 500K
                 </p>
-            </div>
-        </div>
-        <div class="backup-section">
-            <h3>💾 QUẢN LÝ DỮ LIỆU</h3>
-            <div class="controls">
-                <button class="btn btn-success" onclick="saveToFile()">💾 Tải file backup</button>
-                <button class="btn btn-primary" onclick="document.getElementById('fileInput').click()">📂 Tải file lên</button>
-                <button class="btn btn-warning" onclick="saveToMemory()">🔄 Lưu tạm thời</button>
-                <button class="btn btn-primary" onclick="loadFromMemory()">📥 Khôi phục</button>
-                <button class="btn btn-danger" onclick="resetData()">🗑️ Đặt lại</button>
-                <button class="btn btn-primary" onclick="exportData()">📤 Xuất CSV</button>
-            </div>
-            <input type="file" id="fileInput" class="file-input" accept=".json" onchange="loadFromFile(event)">
-            <div class="backup-info">
-                <strong>Hướng dẫn sử dụng:</strong><br>
-                • <strong>Tải file backup:</strong> Tải file JSON chứa dữ liệu hiện tại về máy<br>
-                • <strong>Tải file lên:</strong> Chọn file backup để khôi phục dữ liệu<br>
-                • <strong>Lưu/Khôi phục tạm thời:</strong> Lưu trữ trong bộ nhớ trình duyệt hiện tại<br>
-                • <strong>Xuất CSV:</strong> Xuất bảng xếp hạng và kết quả sang Excel
             </div>
         </div>
     </div>
@@ -1143,8 +1188,8 @@
                     <td>${team.matches}</td>
                     <td>${team.wins}</td>
                     <td>${team.losses}</td>
-                    <td>${team.pointsFor}</td>
-                    <td>${team.pointsAgainst}</td>
+                    <td class="hide-mobile">${team.pointsFor}</td>
+                    <td class="hide-mobile">${team.pointsAgainst}</td>
                     <td>${team.goalDifference >= 0 ? '+' : ''}${team.goalDifference}</td>
                     <td><strong>${team.points}</strong></td>
                 `;
@@ -1395,30 +1440,7 @@
         // Khởi tạo ứng dụng
         function initializeApp() {
             initializeTeamStats();
-            updateOnlineStatus();
             updateStats();
+            updateStatus('READY', true);
             
-            // Tự động tải dữ liệu nếu có
-            if (window.tournamentData) {
-                loadData();
-            }
-            
-            // Lắng nghe sự kiện online/offline
-            window.addEventListener('online', updateOnlineStatus);
-            window.addEventListener('offline', updateOnlineStatus);
-            
-            // Tự động lưu dữ liệu khi rời trang
-            window.addEventListener('beforeunload', () => {
-                if (Object.keys(matchResults).length > 0) {
-                    saveData();
-                }
-            });
-            
-            console.log('Ứng dụng PickleBall Cup 2025 đã khởi tạo thành công!');
-        }
-
-        // Khởi động ứng dụng khi DOM đã sẵn sàng
-        document.addEventListener('DOMContentLoaded', initializeApp);
-    </script>
-</body>
-</html>
+            //
