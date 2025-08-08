@@ -563,7 +563,28 @@
         </div>
         
         <div class="content">
-          
+            <div class="backup-section">
+                <h3>💾 QUẢN LÝ DỮ LIỆU</h3>
+                <div class="controls">
+                    <button class="btn btn-success" onclick="saveToFile()">💾 Tải file backup</button>
+                    <button class="btn btn-primary" onclick="document.getElementById('fileInput').click()">📂 Tải file lên</button>
+                    <button class="btn btn-warning" onclick="saveToMemory()">🔄 Lưu thủ công</button>
+                    <button class="btn btn-primary" onclick="loadFromMemory()">📥 Khôi phục</button>
+                    <button class="btn btn-primary" onclick="checkCacheStatus()">📊 Kiểm tra cache</button>
+                    <button class="btn btn-danger" onclick="clearCache()">🗑️ Xóa cache</button>
+                    <button class="btn btn-primary" onclick="exportData()">📤 Xuất CSV</button>
+                </div>
+                <input type="file" id="fileInput" class="file-input" accept=".json" onchange="loadFromFile(event)">
+                <div class="backup-info">
+                    <strong>Hướng dẫn sử dụng:</strong><br>
+                    • <strong>Tự động lưu:</strong> Dữ liệu tự động lưu sau mỗi thay đổi<br>
+                    • <strong>Tải file backup:</strong> Tải file JSON để backup an toàn<br>
+                    • <strong>Tải file lên:</strong> Khôi phục từ file backup<br>
+                    • <strong>Kiểm tra cache:</strong> Xem trạng thái dữ liệu đã lưu<br>
+                    • <strong>Xóa cache:</strong> Xóa toàn bộ dữ liệu trong trình duyệt
+                </div>
+            </div>
+            
             <div class="stats">
                 <div class="stat-card">
                     <div class="stat-number" id="totalMatches">21</div>
@@ -772,7 +793,7 @@
                                 <td class="time-cell">7:00</td>
                                 <td class="team-cell">Nam Hi <br> Thành Thục</td>
                                 <td class="vs-cell">VS</td>
-                                <td class="team-cell">Linh Muối <br> Đạt Trố</td>
+                                <td class="team-cell">Thanh Sởi <br> Tuấn Mượt</td>
                                 <td><input type="text" class="result-input" data-match="10" data-team1="5" data-team2="6" placeholder="0-0" onchange="updateResult(this)"></td>
                             </tr>
                             <tr>
@@ -822,108 +843,106 @@
             
             <div class="teams-section">
                 <h3>📈 BẢNG XẾP HẠNG</h3>
-                <div class="ranking-table-container">
-                    <table class="ranking-table">
-                        <thead>
-                            <tr>
-                                <th>Hạng</th>
-                                <th>Đội</th>
-                                <th>Trận</th>
-                                <th>Thắng</th>
-                                <th>Thua</th>
-                                <th class="hide-mobile">Điểm ghi</th>
-                                <th class="hide-mobile">Điểm thua</th>
-                                <th>Hiệu số</th>
-                                <th>Điểm</th>
-                            </tr>
-                        </thead>
-                        <tbody id="rankingTable">
-                            <tr>
-                                <td class="ranking-position">1</td>
-                                <td>Kiên KK + Dương Quá</td>
-                                <td>0</td>
-                                <td>0</td>
-                                <td>0</td>
-                                <td class="hide-mobile">0</td>
-                                <td class="hide-mobile">0</td>
-                                <td>0</td>
-                                <td>0</td>
-                            </tr>
-                            <tr>
-                                <td class="ranking-position">2</td>
-                                <td>Tuấn Râu + Nóc nhà Tuấn Râu</td>
-                                <td>0</td>
-                                <td>0</td>
-                                <td>0</td>
-                                <td class="hide-mobile">0</td>
-                                <td class="hide-mobile">0</td>
-                                <td>0</td>
-                                <td>0</td>
-                            </tr>
-                            <tr>
-                                <td class="ranking-position">3</td>
-                                <td>Tâm Bư + Khoa Pub</td>
-                                <td>0</td>
-                                <td>0</td>
-                                <td>0</td>
-                                <td class="hide-mobile">0</td>
-                                <td class="hide-mobile">0</td>
-                                <td>0</td>
-                                <td>0</td>
-                            </tr>
-                            <tr>
-                                <td class="ranking-position">4</td>
-                                <td>Quân Chùn + Danh Hài</td>
-                                <td>0</td>
-                                <td>0</td>
-                                <td>0</td>
-                                <td class="hide-mobile">0</td>
-                                <td class="hide-mobile">0</td>
-                                <td>0</td>
-                                <td>0</td>
-                            </tr>
-                            <tr>
-                                <td class="ranking-position">5</td>
-                                <td>Nam Hi + Thành Thục</td>
-                                <td>0</td>
-                                <td>0</td>
-                                <td>0</td>
-                                <td class="hide-mobile">0</td>
-                                <td class="hide-mobile">0</td>
-                                <td>0</td>
-                                <td>0</td>
-                            </tr>
-                            <tr>
-                                <td class="ranking-position">6</td>
-                                <td>Thanh Sởi + Tuấn Mượt</td>
-                                <td>0</td>
-                                <td>0</td>
-                                <td>0</td>
-                                <td class="hide-mobile">0</td>
-                                <td class="hide-mobile">0</td>
-                                <td>0</td>
-                                <td>0</td>
-                            </tr>
-                            <tr>
-                                <td class="ranking-position">7</td>
-                                <td>Linh Muối + Đạt Trố</td>
-                                <td>0</td>
-                                <td>0</td>
-                                <td>0</td>
-                                <td class="hide-mobile">0</td>
-                                <td class="hide-mobile">0</td>
-                                <td>0</td>
-                                <td>0</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
+                <table class="ranking-table">
+                    <thead>
+                        <tr>
+                            <th>Hạng</th>
+                            <th>Đội</th>
+                            <th>Trận</th>
+                            <th>Thắng</th>
+                            <th>Thua</th>
+                            <th>Điểm ghi</th>
+                            <th>Điểm thua</th>
+                            <th>Hiệu số</th>
+                            <th>Điểm</th>
+                        </tr>
+                    </thead>
+                    <tbody id="rankingTable">
+                        <tr>
+                            <td class="ranking-position">1</td>
+                            <td>Kiên KK + Dương Quá</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0</td>
+                        </tr>
+                        <tr>
+                            <td class="ranking-position">2</td>
+                            <td>Tuấn Râu + Nóc nhà Tuấn Râu</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0</td>
+                        </tr>
+                        <tr>
+                            <td class="ranking-position">3</td>
+                            <td>Tâm Bư + Khoa Pub</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0</td>
+                        </tr>
+                        <tr>
+                            <td class="ranking-position">4</td>
+                            <td>Quân Chùn + Danh Hài</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0</td>
+                        </tr>
+                        <tr>
+                            <td class="ranking-position">5</td>
+                            <td>Nam Hi + Thành Thục</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0</td>
+                        </tr>
+                        <tr>
+                            <td class="ranking-position">6</td>
+                            <td>Thanh Sởi + Tuấn Mượt</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0</td>
+                        </tr>
+                        <tr>
+                            <td class="ranking-position">7</td>
+                            <td>Linh Muối + Đạt Trố</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0</td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
             
             <div class="rules">
                 <h3>📖 QUY ĐỊNH THI ĐẤU</h3>
                 <ul>
-                    <li><strong>Thể thức:</strong> Đấu vòng tròn tính điểm, mỗi trận chạm 11 cách 2 điểm, tối đa 15 điểm</li>
+                    <li><strong>Thể thức:</strong> Đấu vòng tròn tính điểm (21 trận)</li>
                     <li><strong>Tính điểm:</strong> Thắng = 1 điểm, Thua = 0 điểm</li>
                     <li><strong>Trọng tài:</strong> Tú (Lơ Khơ), Hải (Hãi)</li>
                     <li><strong>Y tá:</strong> Lý Nhã Điệp</li>
@@ -967,25 +986,6 @@
                     🎯 Anh Kiên tài trợ 02 hộp bóng 500K<br>
                     🎯 Tuấn Râu tài trợ 500K
                 </p>
-            </div>
-                        <div class="backup-section">
-                <h3>💾 QUẢN LÝ DỮ LIỆU</h3>
-                <div class="controls">
-                    <button class="btn btn-success" onclick="saveToFile()">💾 Tải file backup</button>
-                    <button class="btn btn-primary" onclick="document.getElementById('fileInput').click()">📂 Tải file lên</button>
-                    <button class="btn btn-warning" onclick="saveToMemory()">🔄 Lưu tạm thời</button>
-                    <button class="btn btn-primary" onclick="loadFromMemory()">📥 Khôi phục</button>
-                    <button class="btn btn-danger" onclick="resetData()">🗑️ Đặt lại</button>
-                    <button class="btn btn-primary" onclick="exportData()">📤 Xuất CSV</button>
-                </div>
-                <input type="file" id="fileInput" class="file-input" accept=".json" onchange="loadFromFile(event)">
-                <div class="backup-info">
-                    <strong>Hướng dẫn sử dụng:</strong><br>
-                    • <strong>Tải file backup:</strong> Tải file JSON chứa dữ liệu hiện tại về máy<br>
-                    • <strong>Tải file lên:</strong> Chọn file backup để khôi phục dữ liệu<br>
-                    • <strong>Lưu/Khôi phục tạm thời:</strong> Lưu trữ trong bộ nhớ trình duyệt hiện tại<br>
-                    • <strong>Xuất CSV:</strong> Xuất bảng xếp hạng và kết quả sang Excel
-                </div>
             </div>
         </div>
     </div>
@@ -1087,6 +1087,7 @@
                 updateTeamStats();
                 updateRankingTable();
                 updateStats();
+                autoSave(); // Tự động lưu
                 return;
             }
             
@@ -1115,6 +1116,7 @@
             updateTeamStats();
             updateRankingTable();
             updateStats();
+            autoSave(); // Tự động lưu sau mỗi thay đổi
             
             showNotification(`Đã cập nhật kết quả trận ${matchId}`, 'success');
         }
@@ -1188,8 +1190,8 @@
                     <td>${team.matches}</td>
                     <td>${team.wins}</td>
                     <td>${team.losses}</td>
-                    <td class="hide-mobile">${team.pointsFor}</td>
-                    <td class="hide-mobile">${team.pointsAgainst}</td>
+                    <td>${team.pointsFor}</td>
+                    <td>${team.pointsAgainst}</td>
                     <td>${team.goalDifference >= 0 ? '+' : ''}${team.goalDifference}</td>
                     <td><strong>${team.points}</strong></td>
                 `;
@@ -1343,6 +1345,13 @@
                 teamStats = {};
                 tempData = null;
                 
+                // Xóa localStorage
+                try {
+                    localStorage.removeItem('pickleballTournament2025');
+                } catch (error) {
+                    console.log('Không thể xóa localStorage');
+                }
+                
                 initializeTeamStats();
                 updateInputFields();
                 updateRankingTable();
@@ -1352,6 +1361,23 @@
                 showNotification('Đã xóa toàn bộ dữ liệu!', 'success');
             }
         }
+
+        // Event listeners
+        document.addEventListener('DOMContentLoaded', initializeApp);
+        
+        // Tự động lưu trước khi đóng trang
+        window.addEventListener('beforeunload', function(e) {
+            if (Object.keys(matchResults).length > 0) {
+                autoSave();
+            }
+        });
+        
+        // Lưu khi tab mất focus
+        document.addEventListener('visibilitychange', function() {
+            if (document.visibilityState === 'hidden') {
+                autoSave();
+            }
+        });
 
         // Xuất dữ liệu ra CSV
         function exportData() {
@@ -1425,9 +1451,25 @@
             }
         }
 
-        // Tự động lưu dữ liệu khi có thay đổi
+        // Tự động lưu vào localStorage (an toàn hơn)
         function autoSave() {
-            if (Object.keys(matchResults).length > 0) {
+            try {
+                const data = {
+                    matchResults: matchResults,
+                    teamStats: teamStats,
+                    lastUpdated: new Date().toISOString(),
+                    version: '2.0'
+                };
+                
+                // Lưu vào localStorage
+                localStorage.setItem('pickleballTournament2025', JSON.stringify(data));
+                
+                // Backup vào tempData
+                tempData = data;
+                
+                updateStatus('AUTO SAVED', true);
+            } catch (error) {
+                console.log('LocalStorage không khả dụng, dùng tempData');
                 tempData = {
                     matchResults: matchResults,
                     teamStats: teamStats,
@@ -1437,29 +1479,95 @@
             }
         }
 
+        // Tự động tải dữ liệu khi khởi động
+        function autoLoad() {
+            try {
+                // Thử tải từ localStorage trước
+                const savedData = localStorage.getItem('pickleballTournament2025');
+                if (savedData) {
+                    const data = JSON.parse(savedData);
+                    matchResults = data.matchResults || {};
+                    teamStats = data.teamStats || {};
+                    
+                    updateInputFields();
+                    updateTeamStats();
+                    updateRankingTable();
+                    updateStats();
+                    
+                    updateStatus('AUTO LOADED', true);
+                    showNotification(`Đã tự động khôi phục ${Object.keys(matchResults).length} trận đấu!`, 'info');
+                    return true;
+                }
+            } catch (error) {
+                console.log('Không thể tải từ localStorage');
+            }
+            
+            // Nếu không có localStorage, thử tempData
+            if (tempData) {
+                matchResults = tempData.matchResults || {};
+                teamStats = tempData.teamStats || {};
+                updateInputFields();
+                updateTeamStats();
+                updateRankingTable();
+                updateStats();
+                return true;
+            }
+            
+            return false;
+        }
+
+        // Xóa cache
+        function clearCache() {
+            if (confirm('Xóa toàn bộ dữ liệu đã lưu trong trình duyệt?')) {
+                try {
+                    localStorage.removeItem('pickleballTournament2025');
+                    showNotification('Đã xóa cache!', 'success');
+                } catch (error) {
+                    console.log('Không thể xóa localStorage');
+                }
+                tempData = null;
+                resetData();
+            }
+        }
+
+        // Kiểm tra và hiển thị trạng thái cache
+        function checkCacheStatus() {
+            try {
+                const savedData = localStorage.getItem('pickleballTournament2025');
+                if (savedData) {
+                    const data = JSON.parse(savedData);
+                    const matchCount = Object.keys(data.matchResults || {}).length;
+                    const lastUpdate = new Date(data.lastUpdated).toLocaleString('vi-VN');
+                    
+                    showNotification(`Cache: ${matchCount} trận, cập nhật lần cuối: ${lastUpdate}`, 'info');
+                }
+            } catch (error) {
+                showNotification('Không có cache hoặc cache lỗi', 'info');
+            }
+        }
+
         // Khởi tạo ứng dụng
         function initializeApp() {
             initializeTeamStats();
             updateStats();
-            updateStatus('READY', true);
             
             // Tự động tải dữ liệu nếu có
-            if (window.tournamentData) {
-                loadData();
+            const hasData = autoLoad();
+            
+            if (hasData) {
+                updateStatus('DATA RESTORED', true);
+            } else {
+                updateStatus('READY', true);
             }
             
-            // Lắng nghe sự kiện online/offline
-            window.addEventListener('online', updateOnlineStatus);
-            window.addEventListener('offline', updateOnlineStatus);
+            // Hiển thị hướng dẫn lần đầu
+            if (!hasData) {
+                setTimeout(() => {
+                    showNotification('Dữ liệu sẽ tự động lưu khi bạn cập nhật kết quả!', 'info');
+                }, 2000);
+            }
             
-            // Tự động lưu dữ liệu khi rời trang
-            window.addEventListener('beforeunload', () => {
-                if (Object.keys(matchResults).length > 0) {
-                    saveData();
-                }
-            });
-            
-            console.log('Ứng dụng PickleBall Cup 2025 đã khởi tạo thành công!');
+            console.log('PickleBall Tournament 2025 initialized successfully!');
         }
 
         // Khởi động ứng dụng khi DOM đã sẵn sàng
