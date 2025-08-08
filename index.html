@@ -563,27 +563,7 @@
         </div>
         
         <div class="content">
-            <div class="backup-section">
-                <h3>💾 QUẢN LÝ DỮ LIỆU</h3>
-                <div class="controls">
-                    <button class="btn btn-success" onclick="saveToFile()">💾 Tải file backup</button>
-                    <button class="btn btn-primary" onclick="document.getElementById('fileInput').click()">📂 Tải file lên</button>
-                    <button class="btn btn-warning" onclick="saveToMemory()">🔄 Lưu thủ công</button>
-                    <button class="btn btn-primary" onclick="loadFromMemory()">📥 Khôi phục</button>
-                    <button class="btn btn-primary" onclick="checkCacheStatus()">📊 Kiểm tra cache</button>
-                    <button class="btn btn-danger" onclick="clearCache()">🗑️ Xóa cache</button>
-                    <button class="btn btn-primary" onclick="exportData()">📤 Xuất CSV</button>
-                </div>
-                <input type="file" id="fileInput" class="file-input" accept=".json" onchange="loadFromFile(event)">
-                <div class="backup-info">
-                    <strong>Hướng dẫn sử dụng:</strong><br>
-                    • <strong>Tự động lưu:</strong> Dữ liệu tự động lưu sau mỗi thay đổi<br>
-                    • <strong>Tải file backup:</strong> Tải file JSON để backup an toàn<br>
-                    • <strong>Tải file lên:</strong> Khôi phục từ file backup<br>
-                    • <strong>Kiểm tra cache:</strong> Xem trạng thái dữ liệu đã lưu<br>
-                    • <strong>Xóa cache:</strong> Xóa toàn bộ dữ liệu trong trình duyệt
-                </div>
-            </div>
+            
             
             <div class="stats">
                 <div class="stat-card">
@@ -988,6 +968,27 @@
                 </p>
             </div>
         </div>
+        <div class="backup-section">
+                <h3>💾 QUẢN LÝ DỮ LIỆU</h3>
+                <div class="controls">
+                    <button class="btn btn-success" onclick="saveToFile()">💾 Tải file backup</button>
+                    <button class="btn btn-primary" onclick="document.getElementById('fileInput').click()">📂 Tải file lên</button>
+                    <button class="btn btn-warning" onclick="saveToMemory()">🔄 Lưu thủ công</button>
+                    <button class="btn btn-primary" onclick="loadFromMemory()">📥 Khôi phục</button>
+                    <button class="btn btn-primary" onclick="checkCacheStatus()">📊 Kiểm tra cache</button>
+                    <button class="btn btn-danger" onclick="clearCache()">🗑️ Xóa cache</button>
+                    <button class="btn btn-primary" onclick="exportData()">📤 Xuất CSV</button>
+                </div>
+                <input type="file" id="fileInput" class="file-input" accept=".json" onchange="loadFromFile(event)">
+                <div class="backup-info">
+                    <strong>Hướng dẫn sử dụng:</strong><br>
+                    • <strong>Tự động lưu:</strong> Dữ liệu tự động lưu sau mỗi thay đổi<br>
+                    • <strong>Tải file backup:</strong> Tải file JSON để backup an toàn<br>
+                    • <strong>Tải file lên:</strong> Khôi phục từ file backup<br>
+                    • <strong>Kiểm tra cache:</strong> Xem trạng thái dữ liệu đã lưu<br>
+                    • <strong>Xóa cache:</strong> Xóa toàn bộ dữ liệu trong trình duyệt
+                </div>
+            </div>
     </div>
 
     <script>
