@@ -561,10 +561,18 @@
             <h2>Mini Game PickleBall Quảng Hùng - CUP 2025</h2>
             <p>⏰ Thời gian: 6:00 - 9:00</p>
         </div>
-        
+        <div class="backup-section">
+            <h3>💾 QUẢN LÝ DỮ LIỆU</h3>
+            <div class="controls">
+                <button class="btn btn-success" onclick="saveToFile()">💾 Tải file backup</button>
+                <button class="btn btn-primary" onclick="document.getElementById('fileInput').click()">📂 Tải file lên</button>
+                <button class="btn btn-warning" onclick="saveToServer()">🔄 Lưu lên server</button>
+                <button class="btn btn-primary" onclick="loadFromServer()">📥 Tải từ server</button>
+                <button class="btn btn-danger" onclick="clearServerData()">🗑️ Xóa dữ liệu server</button>
+                <button class="btn btn-primary" onclick="exportData()">📤 Xuất CSV</button>
+            </div>
         <div class="content">
-            
-            
+                        
             <div class="stats">
                 <div class="stat-card">
                     <div class="stat-number" id="totalMatches">21</div>
@@ -773,7 +781,7 @@
                                 <td class="time-cell">7:00</td>
                                 <td class="team-cell">Nam Hi <br> Thành Thục</td>
                                 <td class="vs-cell">VS</td>
-                                <td class="team-cell">Thanh Sởi <br> Tuấn Mượt</td>
+                                <td class="team-cell">Linh Muối <br> Đạt Trố</td>
                                 <td><input type="text" class="result-input" data-match="10" data-team1="5" data-team2="6" placeholder="0-0" onchange="updateResult(this)"></td>
                             </tr>
                             <tr>
@@ -823,100 +831,102 @@
             
             <div class="teams-section">
                 <h3>📈 BẢNG XẾP HẠNG</h3>
-                <table class="ranking-table">
-                    <thead>
-                        <tr>
-                            <th>Hạng</th>
-                            <th>Đội</th>
-                            <th>Trận</th>
-                            <th>Thắng</th>
-                            <th>Thua</th>
-                            <th>Điểm ghi</th>
-                            <th>Điểm thua</th>
-                            <th>Hiệu số</th>
-                            <th>Điểm</th>
-                        </tr>
-                    </thead>
-                    <tbody id="rankingTable">
-                        <tr>
-                            <td class="ranking-position">1</td>
-                            <td>Kiên KK + Dương Quá</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>0</td>
-                        </tr>
-                        <tr>
-                            <td class="ranking-position">2</td>
-                            <td>Tuấn Râu + Nóc nhà Tuấn Râu</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>0</td>
-                        </tr>
-                        <tr>
-                            <td class="ranking-position">3</td>
-                            <td>Tâm Bư + Khoa Pub</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>0</td>
-                        </tr>
-                        <tr>
-                            <td class="ranking-position">4</td>
-                            <td>Quân Chùn + Danh Hài</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>0</td>
-                        </tr>
-                        <tr>
-                            <td class="ranking-position">5</td>
-                            <td>Nam Hi + Thành Thục</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>0</td>
-                        </tr>
-                        <tr>
-                            <td class="ranking-position">6</td>
-                            <td>Thanh Sởi + Tuấn Mượt</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>0</td>
-                        </tr>
-                        <tr>
-                            <td class="ranking-position">7</td>
-                            <td>Linh Muối + Đạt Trố</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>0</td>
-                        </tr>
-                    </tbody>
-                </table>
+                <div class="ranking-table-container">
+                    <table class="ranking-table">
+                        <thead>
+                            <tr>
+                                <th>Hạng</th>
+                                <th>Đội</th>
+                                <th>Trận</th>
+                                <th>Thắng</th>
+                                <th>Thua</th>
+                                <th>Điểm ghi</th>
+                                <th>Điểm thua</th>
+                                <th>Hiệu số</th>
+                                <th>Điểm</th>
+                            </tr>
+                        </thead>
+                        <tbody id="rankingTable">
+                            <tr>
+                                <td class="ranking-position">1</td>
+                                <td>Kiên KK + Dương Quá</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                            </tr>
+                            <tr>
+                                <td class="ranking-position">2</td>
+                                <td>Tuấn Râu + Nóc nhà Tuấn Râu</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                            </tr>
+                            <tr>
+                                <td class="ranking-position">3</td>
+                                <td>Tâm Bư + Khoa Pub</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                            </tr>
+                            <tr>
+                                <td class="ranking-position">4</td>
+                                <td>Quân Chùn + Danh Hài</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                            </tr>
+                            <tr>
+                                <td class="ranking-position">5</td>
+                                <td>Nam Hi + Thành Thục</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                            </tr>
+                            <tr>
+                                <td class="ranking-position">6</td>
+                                <td>Thanh Sởi + Tuấn Mượt</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                            </tr>
+                            <tr>
+                                <td class="ranking-position">7</td>
+                                <td>Linh Muối + Đạt Trố</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
             
             <div class="rules">
@@ -968,34 +978,25 @@
                 </p>
             </div>
         </div>
-        <div class="backup-section">
-                <h3>💾 QUẢN LÝ DỮ LIỆU</h3>
-                <div class="controls">
-                    <button class="btn btn-success" onclick="saveToFile()">💾 Tải file backup</button>
-                    <button class="btn btn-primary" onclick="document.getElementById('fileInput').click()">📂 Tải file lên</button>
-                    <button class="btn btn-warning" onclick="saveToMemory()">🔄 Lưu thủ công</button>
-                    <button class="btn btn-primary" onclick="loadFromMemory()">📥 Khôi phục</button>
-                    <button class="btn btn-primary" onclick="checkCacheStatus()">📊 Kiểm tra cache</button>
-                    <button class="btn btn-danger" onclick="clearCache()">🗑️ Xóa cache</button>
-                    <button class="btn btn-primary" onclick="exportData()">📤 Xuất CSV</button>
-                </div>
-                <input type="file" id="fileInput" class="file-input" accept=".json" onchange="loadFromFile(event)">
-                <div class="backup-info">
-                    <strong>Hướng dẫn sử dụng:</strong><br>
-                    • <strong>Tự động lưu:</strong> Dữ liệu tự động lưu sau mỗi thay đổi<br>
-                    • <strong>Tải file backup:</strong> Tải file JSON để backup an toàn<br>
-                    • <strong>Tải file lên:</strong> Khôi phục từ file backup<br>
-                    • <strong>Kiểm tra cache:</strong> Xem trạng thái dữ liệu đã lưu<br>
-                    • <strong>Xóa cache:</strong> Xóa toàn bộ dữ liệu trong trình duyệt
-                </div>
+
+            <input type="file" id="fileInput" class="file-input" accept=".json" onchange="loadFromFile(event)">
+            <div class="backup-info">
+                <strong>Hướng dẫn sử dụng:</strong><br>
+                • <strong>Tự động lưu:</strong> Dữ liệu tự động lưu sau mỗi thay đổi<br>
+                • <strong>Tải file backup:</strong> Tải file JSON để backup an toàn<br>
+                • <strong>Tải file lên:</strong> Khôi phục từ file backup<br>
+                • <strong>Lưu lên server:</strong> Lưu dữ liệu lên server<br>
+                • <strong>Tải từ server:</strong> Tải dữ liệu từ server<br>
+                • <strong>Xóa dữ liệu server:</strong> Xóa toàn bộ dữ liệu trên server
             </div>
+        </div>
     </div>
 
     <script>
         // Dữ liệu các đội
         const teams = {
             1: "Kiên KK + Dương Quá",
-            2: "Tuấn Râu + Nóc nhà",
+            2: "Tuấn Râu + Nóc nhà Tuấn Râu",
             3: "Tâm Bư + Khoa Pub",
             4: "Quân Chùn + Danh Hài",
             5: "Nam Hi + Thành Thục",
@@ -1003,10 +1004,35 @@
             7: "Linh Muối + Đạt Trố"
         };
 
-        // Dữ liệu trận đấu và kết quả
-        let matchResults = {};
+        // Dữ liệu trận đấu từ HTML
+        const matchSchedule = [
+            { id: 1, court: "Sân 1", time: "6:00", team1: "Kiên KK + Dương Quá", team2: "Tuấn Râu + Nóc nhà Tuấn Râu", team1Id: "1", team2Id: "2", score: "" },
+            { id: 2, court: "Sân 2", time: "6:00", team1: "Tâm Bư + Khoa Pub", team2: "Quân Chùn + Danh Hài", team1Id: "3", team2Id: "4", score: "" },
+            { id: 3, court: "Sân 1", time: "6:15", team1: "Nam Hi + Thành Thục", team2: "Thanh Sởi + Tuấn Mượt", team1Id: "5", team2Id: "6", score: "" },
+            { id: 4, court: "Sân 2", time: "6:15", team1: "Linh Muối + Đạt Trố", team2: "Kiên KK + Dương Quá", team1Id: "7", team2Id: "1", score: "" },
+            { id: 5, court: "Sân 1", time: "6:30", team1: "Tuấn Râu + Nóc nhà Tuấn Râu", team2: "Tâm Bư + Khoa Pub", team1Id: "2", team2Id: "3", score: "" },
+            { id: 6, court: "Sân 2", time: "6:30", team1: "Quân Chùn + Danh Hài", team2: "Nam Hi + Thành Thục", team1Id: "4", team2Id: "5", score: "" },
+            { id: 7, court: "Sân 1", time: "6:45", team1: "Thanh Sởi + Tuấn Mượt", team2: "Linh Muối + Đạt Trố", team1Id: "6", team2Id: "7", score: "" },
+            { id: 8, court: "Sân 2", time: "6:45", team1: "Kiên KK + Dương Quá", team2: "Tâm Bư + Khoa Pub", team1Id: "1", team2Id: "3", score: "" },
+            { id: 9, court: "Sân 1", time: "7:00", team1: "Tuấn Râu + Nóc nhà Tuấn Râu", team2: "Quân Chùn + Danh Hài", team1Id: "2", team2Id: "4", score: "" },
+            { id: 10, court: "Sân 2", time: "7:00", team1: "Nam Hi + Thành Thục", team2: "Linh Muối + Đạt Trố", team1Id: "5", team2Id: "6", score: "" },
+            { id: 11, court: "Sân 1", time: "7:15", team1: "Linh Muối + Đạt Trố", team2: "Tuấn Râu + Nóc nhà Tuấn Râu", team1Id: "7", team2Id: "2", score: "" },
+            { id: 12, court: "Sân 2", time: "7:15", team1: "Kiên KK + Dương Quá", team2: "Quân Chùn + Danh Hài", team1Id: "1", team2Id: "4", score: "" },
+            { id: 13, court: "Sân 1", time: "7:30", team1: "Tâm Bư + Khoa Pub", team2: "Nam Hi + Thành Thục", team1Id: "3", team2Id: "5", score: "" },
+            { id: 14, court: "Sân 2", time: "7:30", team1: "Thanh Sởi + Tuấn Mượt", team2: "Kiên KK + Dương Quá", team1Id: "6", team2Id: "1", score: "" },
+            { id: 15, court: "Sân 1", time: "7:45", team1: "Linh Muối + Đạt Trố", team2: "Quân Chùn + Danh Hài", team1Id: "7", team2Id: "4", score: "" },
+            { id: 16, court: "Sân 2", time: "7:45", team1: "Tuấn Râu + Nóc nhà Tuấn Râu", team2: "Nam Hi + Thành Thục", team1Id: "2", team2Id: "5", score: "" },
+            { id: 17, court: "Sân 1", time: "8:00", team1: "Tâm Bư + Khoa Pub", team2: "Thanh Sởi + Tuấn Mượt", team1Id: "3", team2Id: "6", score: "" },
+            { id: 18, court: "Sân 2", time: "8:00", team1: "Kiên KK + Dương Quá", team2: "Nam Hi + Thành Thục", team1Id: "1", team2Id: "5", score: "" },
+            { id: 19, court: "Sân 1", time: "8:15", team1: "Quân Chùn + Danh Hài", team2: "Thanh Sởi + Tuấn Mượt", team1Id: "4", team2Id: "6", score: "" },
+            { id: 20, court: "Sân 2", time: "8:15", team1: "Linh Muối + Đạt Trố", team2: "Tâm Bư + Khoa Pub", team1Id: "7", team2Id: "3", score: "" },
+            { id: 21, court: "Sân 1", time: "8:30", team1: "Tuấn Râu + Nóc nhà Tuấn Râu", team2: "Thanh Sởi + Tuấn Mượt", team1Id: "2", team2Id: "6", score: "" }
+        ];
+
+        // Dữ liệu trạng thái
+        let matchResults = [];
         let teamStats = {};
-        let tempData = null; // Lưu trữ tạm thời trong bộ nhớ
+        let tempData = null;
 
         // Khởi tạo stats cho các đội
         function initializeTeamStats() {
@@ -1022,16 +1048,11 @@
             });
         }
 
-        // Kiểm tra trạng thái
+        // Cập nhật trạng thái kết nối
         function updateStatus(message = 'READY', isSuccess = true) {
             const statusIndicator = document.getElementById('statusIndicator');
             const statusText = document.getElementById('statusText');
-            
-            if (isSuccess) {
-                statusIndicator.className = 'status-indicator status-online';
-            } else {
-                statusIndicator.className = 'status-indicator status-offline';
-            }
+            statusIndicator.className = `status-indicator ${isSuccess ? 'status-online' : 'status-offline'}`;
             statusText.textContent = message;
         }
 
@@ -1041,11 +1062,7 @@
             notification.className = `notification ${type}`;
             notification.textContent = message;
             document.body.appendChild(notification);
-            
-            setTimeout(() => {
-                notification.classList.add('show');
-            }, 100);
-            
+            setTimeout(() => notification.classList.add('show'), 100);
             setTimeout(() => {
                 notification.classList.remove('show');
                 setTimeout(() => {
@@ -1056,204 +1073,301 @@
             }, 4000);
         }
 
-        // Validate kết quả nhập vào
+        // Validate tỷ số
         function validateScore(scoreText) {
             const scorePattern = /^(\d{1,2})-(\d{1,2})$/;
             const match = scoreText.match(scorePattern);
-            
             if (!match) return null;
-            
             const score1 = parseInt(match[1]);
             const score2 = parseInt(match[2]);
-            
-            // Kiểm tra tỷ số hợp lệ (0-50)
             if (score1 < 0 || score1 > 50 || score2 < 0 || score2 > 50) return null;
-            
             return { score1, score2 };
         }
 
         // Cập nhật kết quả trận đấu
-        function updateResult(input) {
-            const matchId = input.dataset.match;
+        async function updateResult(input) {
+            const matchId = parseInt(input.dataset.match);
             const team1Id = input.dataset.team1;
             const team2Id = input.dataset.team2;
             const scoreText = input.value.trim();
-            
-            // Reset class
+            const match = matchSchedule.find(m => m.id === matchId);
+
             input.classList.remove('completed', 'invalid');
-            
+
             if (!scoreText) {
                 // Xóa kết quả
-                delete matchResults[matchId];
-                updateTeamStats();
-                updateRankingTable();
-                updateStats();
-                autoSave(); // Tự động lưu
+                matchResults = matchResults.filter(m => m.id !== matchId);
+                try {
+                    await saveToServer();
+                    await loadFromServer();
+                    showNotification(`Đã xóa kết quả trận ${matchId}`, 'success');
+                } catch (error) {
+                    showNotification('Lỗi khi xóa kết quả: ' + error.message, 'error');
+                    updateStatus('SAVE ERROR', false);
+                }
                 return;
             }
-            
+
             const score = validateScore(scoreText);
-            
             if (!score) {
                 input.classList.add('invalid');
                 showNotification('Tỷ số không hợp lệ! Vui lòng nhập theo định dạng: 11-9', 'error');
                 return;
             }
-            
-            // Lưu kết quả
-            matchResults[matchId] = {
-                team1: team1Id,
-                team2: team2Id,
-                score1: score.score1,
-                score2: score.score2,
-                winner: score.score1 > score.score2 ? team1Id : team2Id,
-                timestamp: new Date().toISOString()
+
+            // Cập nhật matchResults
+            const updatedMatch = {
+                id: matchId,
+                court: match.court,
+                time: match.time,
+                team1: teams[team1Id],
+                team2: teams[team2Id],
+                score: `${score.score1}-${score.score2}`
             };
-            
+
+            const existingIndex = matchResults.findIndex(m => m.id === matchId);
+            if (existingIndex >= 0) {
+                matchResults[existingIndex] = updatedMatch;
+            } else {
+                matchResults.push(updatedMatch);
+            }
+
             input.classList.add('completed');
-            input.value = `${score.score1}-${score.score2}`;
-            
-            // Cập nhật thống kê và bảng xếp hạng
-            updateTeamStats();
-            updateRankingTable();
-            updateStats();
-            autoSave(); // Tự động lưu sau mỗi thay đổi
-            
-            showNotification(`Đã cập nhật kết quả trận ${matchId}`, 'success');
-        }
+            input.value = updatedMatch.score;
 
-        // Cập nhật thống kê các đội
-        function updateTeamStats() {
-            // Reset stats
-            initializeTeamStats();
-            
-            // Tính toán lại từ kết quả các trận
-            Object.values(matchResults).forEach(match => {
-                const team1Id = match.team1;
-                const team2Id = match.team2;
-                
-                // Cập nhật số trận
-                teamStats[team1Id].matches++;
-                teamStats[team2Id].matches++;
-                
-                // Cập nhật điểm ghi/thua
-                teamStats[team1Id].pointsFor += match.score1;
-                teamStats[team1Id].pointsAgainst += match.score2;
-                teamStats[team2Id].pointsFor += match.score2;
-                teamStats[team2Id].pointsAgainst += match.score1;
-                
-                // Cập nhật thắng/thua
-                if (match.winner === team1Id) {
-                    teamStats[team1Id].wins++;
-                    teamStats[team1Id].points += 1;
-                    teamStats[team2Id].losses++;
-                } else {
-                    teamStats[team2Id].wins++;
-                    teamStats[team2Id].points += 1;
-                    teamStats[team1Id].losses++;
-                }
-            });
-        }
-
-        // Cập nhật bảng xếp hạng
-        function updateRankingTable() {
-            const tbody = document.getElementById('rankingTable');
-            
-            // Tạo mảng các đội với thống kê
-            const teamArray = Object.keys(teams).map(teamId => ({
-                id: teamId,
-                name: teams[teamId],
-                ...teamStats[teamId],
-                goalDifference: teamStats[teamId].pointsFor - teamStats[teamId].pointsAgainst
-            }));
-            
-            // Sắp xếp theo: Điểm số -> Hiệu số -> Điểm ghi
-            teamArray.sort((a, b) => {
-                if (b.points !== a.points) return b.points - a.points;
-                if (b.goalDifference !== a.goalDifference) return b.goalDifference - a.goalDifference;
-                return b.pointsFor - a.pointsFor;
-            });
-            
-            // Cập nhật bảng
-            tbody.innerHTML = '';
-            teamArray.forEach((team, index) => {
-                const row = document.createElement('tr');
-                const rank = index + 1;
-                let rankClass = '';
-                
-                if (rank === 1) rankClass = 'ranking-1';
-                else if (rank === 2) rankClass = 'ranking-2';
-                else if (rank === 3) rankClass = 'ranking-3';
-                
-                row.innerHTML = `
-                    <td class="ranking-position ${rankClass}">${rank}</td>
-                    <td>${team.name}</td>
-                    <td>${team.matches}</td>
-                    <td>${team.wins}</td>
-                    <td>${team.losses}</td>
-                    <td>${team.pointsFor}</td>
-                    <td>${team.pointsAgainst}</td>
-                    <td>${team.goalDifference >= 0 ? '+' : ''}${team.goalDifference}</td>
-                    <td><strong>${team.points}</strong></td>
-                `;
-                tbody.appendChild(row);
-            });
-        }
-
-        // Cập nhật thống kê tổng quan
-        function updateStats() {
-            const completedMatches = Object.keys(matchResults).length;
-            const totalMatches = 21;
-            const remainingMatches = totalMatches - completedMatches;
-            const progress = Math.round((completedMatches / totalMatches) * 100);
-            
-            document.getElementById('completedMatches').textContent = completedMatches;
-            document.getElementById('remainingMatches').textContent = remainingMatches;
-            document.getElementById('progress').textContent = progress + '%';
-        }
-
-        // Lưu dữ liệu vào bộ nhớ tạm thời
-        function saveToMemory() {
             try {
-                const data = {
-                    matchResults: matchResults,
-                    teamStats: teamStats,
-                    lastUpdated: new Date().toISOString(),
-                    version: '2.0'
-                };
-                
-                tempData = data;
-                updateStatus('DATA SAVED', true);
-                showNotification('Đã lưu dữ liệu vào bộ nhớ tạm thời!', 'success');
+                await saveToServer();
+                await loadFromServer();
+                showNotification(`Đã cập nhật kết quả trận ${matchId}`, 'success');
             } catch (error) {
                 showNotification('Lỗi khi lưu dữ liệu: ' + error.message, 'error');
                 updateStatus('SAVE ERROR', false);
             }
         }
 
-        // Tải dữ liệu từ bộ nhớ tạm thời
-        function loadFromMemory() {
-            try {
-                if (!tempData) {
-                    showNotification('Không tìm thấy dữ liệu trong bộ nhớ tạm thời!', 'error');
-                    return;
+        // Cập nhật thống kê đội
+        function updateTeamStats() {
+            initializeTeamStats();
+            matchResults.forEach(match => {
+                const [score1, score2] = match.score.split('-').map(Number);
+                const team1Id = Object.keys(teams).find(id => teams[id] === match.team1);
+                const team2Id = Object.keys(teams).find(id => teams[id] === match.team2);
+
+                if (team1Id && team2Id) {
+                    teamStats[team1Id].matches++;
+                    teamStats[team2Id].matches++;
+                    teamStats[team1Id].pointsFor += score1;
+                    teamStats[team1Id].pointsAgainst += score2;
+                    teamStats[team2Id].pointsFor += score2;
+                    teamStats[team2Id].pointsAgainst += score1;
+
+                    if (score1 > score2) {
+                        teamStats[team1Id].wins++;
+                        teamStats[team1Id].points += 1;
+                        teamStats[team2Id].losses++;
+                    } else {
+                        teamStats[team2Id].wins++;
+                        teamStats[team2Id].points += 1;
+                        teamStats[team1Id].losses++;
+                    }
                 }
-                
-                matchResults = tempData.matchResults || {};
-                teamStats = tempData.teamStats || {};
-                
-                // Cập nhật giao diện
+            });
+            updateRankingTable();
+            updateStats();
+        }
+
+        // Cập nhật bảng xếp hạng
+        function updateRankingTable() {
+            const tbody = document.getElementById('rankingTable');
+            const teamArray = Object.keys(teams).map(teamId => ({
+                id: teamId,
+                name: teams[teamId],
+                ...teamStats[teamId],
+                goalDifference: teamStats[teamId].pointsFor - teamStats[teamId].pointsAgainst
+            }));
+
+            teamArray.sort((a, b) => {
+                if (b.points !== a.points) return b.points - a.points;
+                if (b.goalDifference !== a.goalDifference) return b.goalDifference - a.goalDifference;
+                return b.pointsFor - a.pointsFor;
+            });
+
+            tbody.innerHTML = '';
+            teamArray.forEach((team, index) => {
+                const rank = index + 1;
+                const rankClass = rank === 1 ? 'ranking-1' : rank === 2 ? 'ranking-2' : rank === 3 ? 'ranking-3' : '';
+                tbody.innerHTML += `
+                    <tr>
+                        <td class="ranking-position ${rankClass}">${rank}</td>
+                        <td>${team.name}</td>
+                        <td>${team.matches}</td>
+                        <td>${team.wins}</td>
+                        <td>${team.losses}</td>
+                        <td>${team.pointsFor}</td>
+                        <td>${team.pointsAgainst}</td>
+                        <td>${team.goalDifference >= 0 ? '+' : ''}${team.goalDifference}</td>
+                        <td><strong>${team.points}</strong></td>
+                    </tr>
+                `;
+            });
+        }
+
+        // Cập nhật thống kê tổng quan
+        function updateStats() {
+            const completedMatches = matchResults.length;
+            const totalMatches = 21;
+            const remainingMatches = totalMatches - completedMatches;
+            const progress = Math.round((completedMatches / totalMatches) * 100);
+
+            document.getElementById('completedMatches').textContent = completedMatches;
+            document.getElementById('remainingMatches').textContent = remainingMatches;
+            document.getElementById('progress').textContent = progress + '%';
+        }
+
+        // Lưu dữ liệu lên server
+        async function saveToServer() {
+            try {
+                const data = {
+                    matchResults: matchResults,
+                    teamStats: Object.keys(teamStats).map(teamId => ({
+                        team: teams[teamId],
+                        matches: teamStats[teamId].matches,
+                        wins: teamStats[teamId].wins,
+                        losses: teamStats[teamId].losses,
+                        pointsScored: teamStats[teamId].pointsFor,
+                        pointsConceded: teamStats[teamId].pointsAgainst,
+                        pointDiff: teamStats[teamId].pointsFor - teamStats[teamId].pointsAgainst,
+                        points: teamStats[teamId].points
+                    })),
+                    lastUpdated: new Date().toISOString(),
+                    version: '2.0'
+                };
+
+                const response = await fetch('/api.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+
+                const result = await response.json();
+                if (!result.success) {
+                    throw new Error(result.message || 'Không thể lưu dữ liệu lên server');
+                }
+
+                updateStatus('SAVED TO SERVER', true);
+                localStorage.setItem('pickleballTournament2025', JSON.stringify(data));
+                tempData = data;
+            } catch (error) {
+                updateStatus('SERVER ERROR', false);
+                throw error;
+            }
+        }
+
+        // Tải dữ liệu từ server
+        async function loadFromServer() {
+            try {
+                const response = await fetch('/api.php');
+                if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
+                const result = await response.json();
+                if (!result.success || !result.data) {
+                    throw new Error(result.message || 'Không thể tải dữ liệu từ server');
+                }
+
+                matchResults = result.data.matchResults || [];
+                teamStats = {};
+                result.data.teamStats.forEach(stat => {
+                    const teamId = Object.keys(teams).find(id => teams[id] === stat.team);
+                    if (teamId) {
+                        teamStats[teamId] = {
+                            matches: stat.matches,
+                            wins: stat.wins,
+                            losses: stat.losses,
+                            pointsFor: stat.pointsScored,
+                            pointsAgainst: stat.pointsConceded,
+                            points: stat.points
+                        };
+                    }
+                });
+
                 updateInputFields();
                 updateTeamStats();
                 updateRankingTable();
                 updateStats();
-                
-                updateStatus('DATA LOADED', true);
-                showNotification('Đã khôi phục dữ liệu từ bộ nhớ tạm thời!', 'success');
+
+                updateStatus('LOADED FROM SERVER', true);
+                showNotification(`Đã tải ${matchResults.length} trận đấu từ server!`, 'success');
             } catch (error) {
-                showNotification('Lỗi khi tải dữ liệu: ' + error.message, 'error');
                 updateStatus('LOAD ERROR', false);
+                showNotification('Lỗi khi tải dữ liệu từ server: ' + error.message, 'error');
             }
+        }
+
+        // Xóa dữ liệu server
+        async function clearServerData() {
+            if (!confirm('Bạn có chắc chắn muốn xóa toàn bộ dữ liệu trên server?')) return;
+            try {
+                const response = await fetch('/api.php?_method=DELETE', {
+                method: 'POST'
+                });
+
+                const result = await response.json();
+                if (!result.success) {
+                    throw new Error(result.message || 'Không thể xóa dữ liệu server');
+                }
+                matchResults = [];
+                initializeTeamStats();
+                updateInputFields();
+                updateRankingTable();
+                updateStats();
+                localStorage.removeItem('pickleballTournament2025');
+                tempData = null;
+                updateStatus('SERVER CLEARED', true);
+                showNotification('Đã xóa dữ liệu server!', 'success');
+            } catch (error) {
+                updateStatus('DELETE ERROR', false);
+                showNotification('Lỗi khi xóa dữ liệu server: ' + error.message, 'error');
+            }
+        }
+
+        // Tải dữ liệu từ file JSON
+        async function loadFromFile(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = async function(e) {
+                try {
+                    const data = JSON.parse(e.target.result);
+                    if (!data.matchResults || !data.teamStats) {
+                        throw new Error('File không đúng định dạng!');
+                    }
+
+                    matchResults = data.matchResults || [];
+                    teamStats = {};
+                    data.teamStats.forEach(stat => {
+                        const teamId = Object.keys(teams).find(id => teams[id] === stat.team);
+                        if (teamId) {
+                            teamStats[teamId] = {
+                                matches: stat.matches,
+                                wins: stat.wins,
+                                losses: stat.losses,
+                                pointsFor: stat.pointsScored,
+                                pointsAgainst: stat.pointsConceded,
+                                points: stat.points
+                            };
+                        }
+                    });
+
+                    await saveToServer();
+                    await loadFromServer();
+                    showNotification(`Đã khôi phục ${matchResults.length} trận đấu từ file!`, 'success');
+                } catch (error) {
+                    showNotification('Lỗi khi đọc file: ' + error.message, 'error');
+                    updateStatus('FILE ERROR', false);
+                }
+            };
+            reader.readAsText(file);
+            event.target.value = '';
         }
 
         // Lưu dữ liệu thành file JSON
@@ -1261,14 +1375,23 @@
             try {
                 const data = {
                     matchResults: matchResults,
-                    teamStats: teamStats,
+                    teamStats: Object.keys(teamStats).map(teamId => ({
+                        team: teams[teamId],
+                        matches: teamStats[teamId].matches,
+                        wins: teamStats[teamId].wins,
+                        losses: teamStats[teamId].losses,
+                        pointsScored: teamStats[teamId].pointsFor,
+                        pointsConceded: teamStats[teamId].pointsAgainst,
+                        pointDiff: teamStats[teamId].pointsFor - teamStats[teamId].pointsAgainst,
+                        points: teamStats[teamId].points
+                    })),
                     lastUpdated: new Date().toISOString(),
                     version: '2.0',
                     tournament: 'PickleBall Cup 2025'
                 };
-                
+
                 const dataStr = JSON.stringify(data, null, 2);
-                const dataBlob = new Blob([dataStr], {type: 'application/json'});
+                const dataBlob = new Blob([dataStr], { type: 'application/json' });
                 const url = URL.createObjectURL(dataBlob);
                 const link = document.createElement('a');
                 link.href = url;
@@ -1277,7 +1400,7 @@
                 link.click();
                 document.body.removeChild(link);
                 URL.revokeObjectURL(url);
-                
+
                 showNotification('Đã tải file backup thành công!', 'success');
                 updateStatus('BACKUP SAVED', true);
             } catch (error) {
@@ -1286,155 +1409,65 @@
             }
         }
 
-        // Tải dữ liệu từ file JSON
-        function loadFromFile(event) {
-            const file = event.target.files[0];
-            if (!file) return;
-            
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                try {
-                    const data = JSON.parse(e.target.result);
-                    
-                    // Kiểm tra định dạng file
-                    if (!data.matchResults || !data.teamStats) {
-                        throw new Error('File không đúng định dạng!');
-                    }
-                    
-                    matchResults = data.matchResults || {};
-                    teamStats = data.teamStats || {};
-                    
-                    // Cập nhật giao diện
-                    updateInputFields();
-                    updateTeamStats();
-                    updateRankingTable();
-                    updateStats();
-                    
-                    updateStatus('FILE LOADED', true);
-                    showNotification(`Đã khôi phục dữ liệu từ file! (${Object.keys(matchResults).length} trận đấu)`, 'success');
-                } catch (error) {
-                    showNotification('Lỗi khi đọc file: ' + error.message, 'error');
-                    updateStatus('FILE ERROR', false);
-                }
-            };
-            reader.readAsText(file);
-            
-            // Reset input
-            event.target.value = '';
-        }
-
-        // Cập nhật các ô input từ dữ liệu đã lưu
+        // Cập nhật các ô input
         function updateInputFields() {
             const inputs = document.querySelectorAll('.result-input');
             inputs.forEach(input => {
-                const matchId = input.dataset.match;
-                if (matchResults[matchId]) {
-                    const match = matchResults[matchId];
-                    input.value = `${match.score1}-${match.score2}`;
+                const matchId = parseInt(input.dataset.match);
+                const match = matchResults.find(m => m.id === matchId);
+                input.classList.remove('completed', 'invalid');
+                if (match && match.score) {
+                    input.value = match.score;
                     input.classList.add('completed');
                 } else {
                     input.value = '';
-                    input.classList.remove('completed', 'invalid');
                 }
             });
         }
 
-        // Đặt lại dữ liệu
-        function resetData() {
-            if (confirm('Bạn có chắc chắn muốn xóa toàn bộ dữ liệu?\nDữ liệu sẽ không thể khôi phục!')) {
-                matchResults = {};
-                teamStats = {};
-                tempData = null;
-                
-                // Xóa localStorage
-                try {
-                    localStorage.removeItem('pickleballTournament2025');
-                } catch (error) {
-                    console.log('Không thể xóa localStorage');
-                }
-                
-                initializeTeamStats();
-                updateInputFields();
-                updateRankingTable();
-                updateStats();
-                
-                updateStatus('RESET', true);
-                showNotification('Đã xóa toàn bộ dữ liệu!', 'success');
-            }
-        }
-
-        // Event listeners
-        document.addEventListener('DOMContentLoaded', initializeApp);
-        
-        // Tự động lưu trước khi đóng trang
-        window.addEventListener('beforeunload', function(e) {
-            if (Object.keys(matchResults).length > 0) {
-                autoSave();
-            }
-        });
-        
-        // Lưu khi tab mất focus
-        document.addEventListener('visibilitychange', function() {
-            if (document.visibilityState === 'hidden') {
-                autoSave();
-            }
-        });
-
         // Xuất dữ liệu ra CSV
         function exportData() {
             try {
-                // BOM để Excel hiển thị tiếng Việt đúng
                 let csv = '\uFEFF';
                 csv += 'STT,Thoi_gian,Doi_1,Doi_2,Ket_qua,Thang\n';
-                
-                const inputs = document.querySelectorAll('.result-input');
-                const matchData = [];
-                
-                inputs.forEach(input => {
-                    const matchId = input.dataset.match;
-                    const team1Id = input.dataset.team1;
-                    const team2Id = input.dataset.team2;
-                    const timeCell = input.closest('tr').querySelector('.time-cell').textContent;
-                    
-                    matchData.push({
-                        id: parseInt(matchId),
-                        time: timeCell,
-                        team1: teams[team1Id],
-                        team2: teams[team2Id],
-                        result: matchResults[matchId] ? `${matchResults[matchId].score1}-${matchResults[matchId].score2}` : '',
-                        winner: matchResults[matchId] ? teams[matchResults[matchId].winner] : ''
-                    });
+
+                const matchData = matchSchedule.map(match => {
+                    const result = matchResults.find(m => m.id === match.id);
+                    return {
+                        id: match.id,
+                        time: match.time,
+                        team1: match.team1,
+                        team2: match.team2,
+                        result: result ? result.score : '',
+                        winner: result && result.score ? (parseInt(result.score.split('-')[0]) > parseInt(result.score.split('-')[1]) ? match.team1 : match.team2) : ''
+                    };
                 });
-                
-                // Sắp xếp theo STT
+
                 matchData.sort((a, b) => a.id - b.id);
-                
                 matchData.forEach(match => {
                     csv += `${match.id},"${match.time}","${match.team1}","${match.team2}","${match.result}","${match.winner}"\n`;
                 });
-                
-                // Thêm bảng xếp hạng
+
                 csv += '\n\nBANG_XEP_HANG\n';
                 csv += 'Hang,Doi,Tran,Thang,Thua,Diem_ghi,Diem_thua,Hieu_so,Diem\n';
-                
+
                 const teamArray = Object.keys(teams).map(teamId => ({
                     id: teamId,
                     name: teams[teamId],
                     ...teamStats[teamId],
                     goalDifference: teamStats[teamId].pointsFor - teamStats[teamId].pointsAgainst
                 }));
-                
+
                 teamArray.sort((a, b) => {
                     if (b.points !== a.points) return b.points - a.points;
                     if (b.goalDifference !== a.goalDifference) return b.goalDifference - a.goalDifference;
                     return b.pointsFor - a.pointsFor;
                 });
-                
+
                 teamArray.forEach((team, index) => {
                     csv += `${index + 1},"${team.name}",${team.matches},${team.wins},${team.losses},${team.pointsFor},${team.pointsAgainst},${team.goalDifference},${team.points}\n`;
                 });
-                
-                // Tạo file download
+
                 const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
                 const link = document.createElement('a');
                 link.href = URL.createObjectURL(blob);
@@ -1443,7 +1476,7 @@
                 link.click();
                 document.body.removeChild(link);
                 URL.revokeObjectURL(link.href);
-                
+
                 showNotification('Đã xuất dữ liệu CSV thành công!', 'success');
                 updateStatus('CSV EXPORTED', true);
             } catch (error) {
@@ -1452,127 +1485,22 @@
             }
         }
 
-        // Tự động lưu vào localStorage (an toàn hơn)
-        function autoSave() {
-            try {
-                const data = {
-                    matchResults: matchResults,
-                    teamStats: teamStats,
-                    lastUpdated: new Date().toISOString(),
-                    version: '2.0'
-                };
-                
-                // Lưu vào localStorage
-                localStorage.setItem('pickleballTournament2025', JSON.stringify(data));
-                
-                // Backup vào tempData
-                tempData = data;
-                
-                updateStatus('AUTO SAVED', true);
-            } catch (error) {
-                console.log('LocalStorage không khả dụng, dùng tempData');
-                tempData = {
-                    matchResults: matchResults,
-                    teamStats: teamStats,
-                    lastUpdated: new Date().toISOString(),
-                    version: '2.0'
-                };
-            }
-        }
-
-        // Tự động tải dữ liệu khi khởi động
-        function autoLoad() {
-            try {
-                // Thử tải từ localStorage trước
-                const savedData = localStorage.getItem('pickleballTournament2025');
-                if (savedData) {
-                    const data = JSON.parse(savedData);
-                    matchResults = data.matchResults || {};
-                    teamStats = data.teamStats || {};
-                    
-                    updateInputFields();
-                    updateTeamStats();
-                    updateRankingTable();
-                    updateStats();
-                    
-                    updateStatus('AUTO LOADED', true);
-                    showNotification(`Đã tự động khôi phục ${Object.keys(matchResults).length} trận đấu!`, 'info');
-                    return true;
-                }
-            } catch (error) {
-                console.log('Không thể tải từ localStorage');
-            }
-            
-            // Nếu không có localStorage, thử tempData
-            if (tempData) {
-                matchResults = tempData.matchResults || {};
-                teamStats = tempData.teamStats || {};
-                updateInputFields();
-                updateTeamStats();
-                updateRankingTable();
-                updateStats();
-                return true;
-            }
-            
-            return false;
-        }
-
-        // Xóa cache
-        function clearCache() {
-            if (confirm('Xóa toàn bộ dữ liệu đã lưu trong trình duyệt?')) {
-                try {
-                    localStorage.removeItem('pickleballTournament2025');
-                    showNotification('Đã xóa cache!', 'success');
-                } catch (error) {
-                    console.log('Không thể xóa localStorage');
-                }
-                tempData = null;
-                resetData();
-            }
-        }
-
-        // Kiểm tra và hiển thị trạng thái cache
-        function checkCacheStatus() {
-            try {
-                const savedData = localStorage.getItem('pickleballTournament2025');
-                if (savedData) {
-                    const data = JSON.parse(savedData);
-                    const matchCount = Object.keys(data.matchResults || {}).length;
-                    const lastUpdate = new Date(data.lastUpdated).toLocaleString('vi-VN');
-                    
-                    showNotification(`Cache: ${matchCount} trận, cập nhật lần cuối: ${lastUpdate}`, 'info');
-                }
-            } catch (error) {
-                showNotification('Không có cache hoặc cache lỗi', 'info');
-            }
-        }
-
         // Khởi tạo ứng dụng
-        function initializeApp() {
+        async function initializeApp() {
             initializeTeamStats();
-            updateStats();
-            
-            // Tự động tải dữ liệu nếu có
-            const hasData = autoLoad();
-            
-            if (hasData) {
-                updateStatus('DATA RESTORED', true);
-            } else {
-                updateStatus('READY', true);
-            }
-            
-            // Hiển thị hướng dẫn lần đầu
-            if (!hasData) {
-                setTimeout(() => {
-                    showNotification('Dữ liệu sẽ tự động lưu khi bạn cập nhật kết quả!', 'info');
-                }, 2000);
-            }
-            
-            console.log('PickleBall Tournament 2025 initialized successfully!');
+            await loadFromServer();
+            // Tự động làm mới dữ liệu mỗi 5 giây
+            setInterval(loadFromServer, 15000);
         }
 
-        // Khởi động ứng dụng khi DOM đã sẵn sàng
+        // Event listeners
         document.addEventListener('DOMContentLoaded', initializeApp);
+        window.addEventListener('beforeunload', saveToServer);
+        document.addEventListener('visibilitychange', () => {
+            if (document.visibilityState === 'hidden') {
+                saveToServer();
+            }
+        });
     </script>
 </body>
 </html>
